@@ -1,0 +1,8 @@
+{
+  "analysis": "The project involves creating a simple vCard website which allows users to display their contact information and other personal details in a digital business card format.",
+  "stack": {
+    "frontend": "React + Tailwind CSS",
+    "backend": "Node.js + Express (no database needed)"
+  },
+  "createdAt": "2025-06-25T17:50:21.557Z"
+}

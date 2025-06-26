@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import ChatInterface from '@/components/ChatInterface'
 
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), { ssr: false })
 
-export default function VibeCodeEditor() {
+export default function WorkbenchLayout() {
   const [prompt, setPrompt] = useState('')
   const [analysis, setAnalysis] = useState('')
   const [stack, setStack] = useState({ frontend: '', backend: '' })
@@ -21,11 +21,13 @@ export default function VibeCodeEditor() {
   const handleSubmit = async () => {
     setLoading(true)
     appendLog('🧠 Submitting prompt to manager agent...')
+
     const res = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt }),
     })
+
     const data = await res.json()
     setAnalysis(data.analysis || '')
     setStack(data.stack || { frontend: '', backend: '' })
@@ -38,7 +40,7 @@ export default function VibeCodeEditor() {
 
   return (
     <div className="flex h-screen">
-      {/* Left: Chat + Prompt */}
+      {/* Left: Prompt + Agent Chat */}
       <div className="w-1/3 p-4 border-r border-gray-300 overflow-y-auto">
         <h1 className="text-2xl font-bold mb-4">🧠 Vibe Forge</h1>
 
@@ -48,6 +50,7 @@ export default function VibeCodeEditor() {
           className="w-full h-24 p-2 border rounded mb-4"
           placeholder="Describe what you want to build..."
         />
+
         <button
           onClick={handleSubmit}
           className="w-full px-4 py-2 bg-black text-white rounded mb-6"
@@ -74,7 +77,7 @@ export default function VibeCodeEditor() {
         />
       </div>
 
-      {/* Right: Code + Logs */}
+      {/* Right: Code Editors + Logs */}
       <div className="flex-1 flex flex-col">
         <div className="flex-1 grid grid-cols-2 gap-4 p-4">
           <div>
