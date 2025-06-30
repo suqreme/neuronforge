@@ -40,6 +40,10 @@
       "allowedTools": [],
       "history": [
         {
+          "display": "my email is ryubin@gmail.com and username is suqreme ",
+          "pastedContents": {}
+        },
+        {
           "display": "[Pasted text #1 +22 lines]GET https://cdn.tailwindcss.com/ net::ERR_BLOCKED_BY_RESPONSE.NotSameOriginAfterDefaultedToSameOriginByCoep   still it says no files received. should we just move this over to actual web?",
           "pastedContents": {
             "1": {
