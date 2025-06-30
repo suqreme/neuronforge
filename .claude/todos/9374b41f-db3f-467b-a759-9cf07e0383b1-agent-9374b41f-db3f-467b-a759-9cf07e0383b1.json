@@ -1,14 +1,20 @@
 [
   {
-    "content": "Debug why no files are reaching sandbox (Array(0))",
-    "status": "in_progress",
-    "priority": "high",
-    "id": "zero-files-debug"
-  },
-  {
-    "content": "Force template generation even when AI proxy works",
+    "content": "Test file generation using Test Files button",
     "status": "pending",
     "priority": "high",
-    "id": "force-templates"
+    "id": "test-button"
+  },
+  {
+    "content": "Deploy debugging version to production",
+    "status": "completed",
+    "priority": "high",
+    "id": "deploy-debug"
+  },
+  {
+    "content": "Identify root cause of zero file generation",
+    "status": "pending",
+    "priority": "high",
+    "id": "root-cause"
   }
 ]
