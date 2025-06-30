@@ -60,16 +60,21 @@ class AIService {
     // For now, we'll use a fallback or throw an informative error
     
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      // Use our proxy API to bypass CORS
+      const proxyUrl = window.location.hostname === 'localhost' 
+        ? 'http://localhost:3001/api/anthropic'  // Local development proxy
+        : '/api/anthropic';  // Production Vercel function
+        
+      console.log(`🔗 Using AI proxy: ${proxyUrl}`);
+      
+      const response = await fetch(proxyUrl, {
         method: 'POST',
         headers: {
-          'x-api-key': apiKey.key,
-          'Content-Type': 'application/json',
-          'anthropic-version': '2023-06-01'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          apiKey: apiKey.key,
           model: apiKey.model,
-          max_tokens: 4000,
           messages: [
             {
               role: 'user',

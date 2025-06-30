@@ -1,8 +1,20 @@
 [
   {
-    "content": "Deploy to production web environment to fix CORS issues",
+    "content": "Implement backend proxy for Anthropic API to bypass CORS",
     "status": "in_progress",
     "priority": "high",
-    "id": "deploy-production"
+    "id": "backend-proxy"
+  },
+  {
+    "content": "Add fallback template generation when AI fails",
+    "status": "pending",
+    "priority": "medium",
+    "id": "template-fallback"
+  },
+  {
+    "content": "Fix CSP eval() restrictions",
+    "status": "pending",
+    "priority": "medium",
+    "id": "csp-fix"
   }
 ]

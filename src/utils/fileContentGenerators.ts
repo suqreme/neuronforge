@@ -61,7 +61,7 @@ export const getFileContent = async (
         return relevantFile.content;
       }
     } catch (error) {
-      console.log('AI generation failed, using template:', error);
+      console.log('AI generation failed, using template fallback:', error);
     }
   }
   

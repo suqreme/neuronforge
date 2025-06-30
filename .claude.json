@@ -40,6 +40,16 @@
       "allowedTools": [],
       "history": [
         {
+          "display": "now that we are public through vercel, i still see [Pasted text #1 +16 lines] and Content Security Policy of your site blocks the use of 'eval' in JavaScript` says no files received from agents yet(node console)",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "Access to fetch at 'https://api.anthropic.com/v1/messages' from origin 'https://neuronforge-sable.vercel.app' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error\napi.anthropic.com/v1/messages:1 \n            \n            \n           Failed to load resource: net::ERR_FAILEDUnderstand this error\nindex-CdpDbieB.js:458 CORS error detected, falling back to template generation\ncallAnthropic @ index-CdpDbieB.js:458Understand this warning\nindex-CdpDbieB.js:571 AI generation failed: Error: CORS_ERROR\n    at rt.callAnthropic (index-CdpDbieB.js:458:289)\n    at async rt.generateCode (index-CdpDbieB.js:571:928)\n    at async Q (index-CdpDbieB.js:571:1688)\n    at async f (index-CdpDbieB.js:1015:6941)\ngenerateCode @ index-CdpDbieB.js:571Understand this error\nindex-CdpDbieB.js:571 AI generation failed for backend: Error: Failed to generate code: Error: CORS_ERROR\n    at rt.generateCode (index-CdpDbieB.js:571:1105)\n    at async Q (index-CdpDbieB.js:571:1688)\n    at async f (index-CdpDbieB.js:1015:6941)"
+            }
+          }
+        },
+        {
           "display": "my email is ryubin@gmail.com and username is suqreme ",
           "pastedContents": {}
         },
