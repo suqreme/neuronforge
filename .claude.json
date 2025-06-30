@@ -1,0 +1,382 @@
+{
+  "numStartups": 4,
+  "installMethod": "unknown",
+  "autoUpdates": true,
+  "tipsHistory": {
+    "new-user-warmup": 1
+  },
+  "promptQueueUseCount": 1,
+  "firstStartTime": "2025-06-29T04:10:38.815Z",
+  "userID": "0a8cb894a844ca22127614bac6d8dde0c2372dad73bf6f1112dd8889cf38b617",
+  "projects": {
+    "/home/ariappa/project": {
+      "allowedTools": [],
+      "history": [
+        {
+          "display": "can you list all the projects i have on claude website",
+          "pastedContents": {}
+        }
+      ],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": true,
+      "projectOnboardingSeenCount": 2,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "lastCost": 0.00012880000000000001,
+      "lastAPIDuration": 2927,
+      "lastDuration": 1950273,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 91,
+      "lastTotalOutputTokens": 14,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 0,
+      "lastSessionId": "6e4649ea-bde6-454e-8481-65859d45aa60"
+    },
+    "/home/ariappa": {
+      "allowedTools": [],
+      "history": [
+        {
+          "display": "[Pasted text #1 +22 lines]GET https://cdn.tailwindcss.com/ net::ERR_BLOCKED_BY_RESPONSE.NotSameOriginAfterDefaultedToSameOriginByCoep   still it says no files received. should we just move this over to actual web?",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "AI generation failed: Error: CORS_ERROR\n    at AIService.callAnthropic (aiService.ts:91:15)\n    at async AIService.generateCode (aiService.ts:284:24)\n    at async generateAIContent (fileContentGenerators.ts:26:22)\n    at async executeNextStage (BackendNode.tsx:112:26)\ngenerateCode @ aiService.ts:291\nawait in generateCode\ngenerateAIContent @ fileContentGenerators.ts:26\nexecuteNextStage @ BackendNode.tsx:112\n(anonymous) @ BackendNode.tsx:254\nsetTimeout\nexecuteNextStage @ BackendNode.tsx:242\n(anonymous) @ BackendNode.tsx:254\nsetTimeout\nexecuteNextStage @ BackendNode.tsx:242\n(anonymous) @ BackendNode.tsx:254\nsetTimeout\nexecuteNextStage @ BackendNode.tsx:242\n(anonymous) @ BackendNode.tsx:254Understand this error\nfileContentGenerators.ts:37 AI generation failed for backend: Error: Failed to generate code: Error: CORS_ERROR\n    at AIService.generateCode (aiService.ts:292:13)\n    at async generateAIContent (fileContentGenerators.ts:26:22)\n    at async executeNextStage (BackendNode.tsx:112:26)"
+            }
+          }
+        },
+        {
+          "display": "it still says, no files received from agents yet - using..\" i checked teh console of main page it says. ❌ No renderable UI content found, showing file list preview\nstaticPreview.ts:93 💡 This might be why the preview is blank - no UI content detected\ncdn.tailwindcss.com/:1 \n            \n            \n           Failed to load resource: net::ERR_BLOCKED_BY_RESPONSE.NotSameOriginAfterDefaultedToSameOriginByCoepUnderstand this error\nheadless:1 The resource https://w-corp-staticblitz.com/fetch.worker.6e337437.js was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally...  also Content Security Policy of your site blocks the use of 'eval' in JavaScript`\nEnsure CORS response header values are valid\nSpecify a Cross-Origin Resource Policy to prevent a resource from being blocked",
+          "pastedContents": {}
+        },
+        {
+          "display": "initially the console of node says it received all files. then if i click \" exit static\" and click \"WebContainer\" it says Container ready, then I would click  install&Start/ inside the log it says basic project structure created. no files received from agents yet - using default template.. also [Pasted text #2 +27 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: ui-1751323184500-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: backend-1751323184989-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\nFlowCanvas.tsx:70 onNodesChange called with: Array(1)\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: manager-1751323184489-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: ui-1751323184500-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: backend-1751323184989-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\nFlowCanvas.tsx:70 onNodesChange called with: Array(1)\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: manager-1751323184489-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: ui-1751323184500-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: backend-1751323184989-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\nFlowCanvas.tsx:70 onNodesChange called with: Array(1)\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: manager-1751323184489-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: ui-1751323184500-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: backend-1751323184989-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: manager-1751323184489-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: ui-1751323184500-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: backend-1751323184989-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: manager-1751323184489-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: ui-1751323184500-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: backend-1751323184989-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: manager-1751323184489-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764\ngetEdgePosition @ @xyflow_react.js?v=aeae1756:4275\n(anonymous) @ @xyflow_react.js?v=aeae1756:8112\nmemoizedSelector @ chunk-XVNVK2FE.js?v=aeae1756:117\n(anonymous) @ chunk-XVNVK2FE.js?v=aeae1756:126\ncheckIfSnapshotChanged @ chunk-BVI7NZOO.js?v=aeae1756:11990\nhandleStoreChange @ chunk-BVI7NZOO.js?v=aeae1756:11980\n(anonymous) @ chunk-XVNVK2FE.js?v=aeae1756:172\nsetState @ chunk-XVNVK2FE.js?v=aeae1756:172\nhandleNodeClick @ @xyflow_react.js?v=aeae1756:7187\nonSelectNodeHandler @ @xyflow_react.js?v=aeae1756:7654\ncallCallback2 @ chunk-BVI7NZOO.js?v=aeae1756:3674\ninvokeGuardedCallbackDev @ chunk-BVI7NZOO.js?v=aeae1756:3699\ninvokeGuardedCallback @ chunk-BVI7NZOO.js?v=aeae1756:3733\ninvokeGuardedCallbackAndCatchFirstError @ chunk-BVI7NZOO.js?v=aeae1756:3736\nexecuteDispatch @ chunk-BVI7NZOO.js?v=aeae1756:7014\nprocessDispatchQueueItemsInOrder @ chunk-BVI7NZOO.js?v=aeae1756:7034\nprocessDispatchQueue @ chunk-BVI7NZOO.js?v=aeae1756:7043\ndispatchEventsForPlugins @ chunk-BVI7NZOO.js?v=aeae1756:7051\n(anonymous) @ chunk-BVI7NZOO.js?v=aeae1756:7174\nbatchedUpdates$1 @ chunk-BVI7NZOO.js?v=aeae1756:18913\nbatchedUpdates @ chunk-BVI7NZOO.js?v=aeae1756:3579\ndispatchEventForPluginEventSystem @ chunk-BVI7NZOO.js?v=aeae1756:7173\ndispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-BVI7NZOO.js?v=aeae1756:5478\ndispatchEvent @ chunk-BVI7NZOO.js?v=aeae1756:5472\ndispatchDiscreteEvent @ chunk-BVI7NZOO.js?v=aeae1756:5449Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: ui-1751323184500-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764\ngetEdgePosition @ @xyflow_react.js?v=aeae1756:4275\n(anonymous) @ @xyflow_react.js?v=aeae1756:8112\nmemoizedSelector @ chunk-XVNVK2FE.js?v=aeae1756:117\n(anonymous) @ chunk-XVNVK2FE.js?v=aeae1756:126\ncheckIfSnapshotChanged @ chunk-BVI7NZOO.js?v=aeae1756:11990\nhandleStoreChange @ chunk-BVI7NZOO.js?v=aeae1756:11980\n(anonymous) @ chunk-XVNVK2FE.js?v=aeae1756:172\nsetState @ chunk-XVNVK2FE.js?v=aeae1756:172\nhandleNodeClick @ @xyflow_react.js?v=aeae1756:7187\nonSelectNodeHandler @ @xyflow_react.js?v=aeae1756:7654\ncallCallback2 @ chunk-BVI7NZOO.js?v=aeae1756:3674\ninvokeGuardedCallbackDev @ chunk-BVI7NZOO.js?v=aeae1756:3699\ninvokeGuardedCallback @ chunk-BVI7NZOO.js?v=aeae1756:3733\ninvokeGuardedCallbackAndCatchFirstError @ chunk-BVI7NZOO.js?v=aeae1756:3736\nexecuteDispatch @ chunk-BVI7NZOO.js?v=aeae1756:7014\nprocessDispatchQueueItemsInOrder @ chunk-BVI7NZOO.js?v=aeae1756:7034\nprocessDispatchQueue @ chunk-BVI7NZOO.js?v=aeae1756:7043\ndispatchEventsForPlugins @ chunk-BVI7NZOO.js?v=aeae1756:7051\n(anonymous) @ chunk-BVI7NZOO.js?v=aeae1756:7174\nbatchedUpdates$1 @ chunk-BVI7NZOO.js?v=aeae1756:18913\nbatchedUpdates @ chunk-BVI7NZOO.js?v=aeae1756:3579\ndispatchEventForPluginEventSystem @ chunk-BVI7NZOO.js?v=aeae1756:7173\ndispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-BVI7NZOO.js?v=aeae1756:5478\ndispatchEvent @ chunk-BVI7NZOO.js?v=aeae1756:5472\ndispatchDiscreteEvent @ chunk-BVI7NZOO.js?v=aeae1756:5449Understand this warning\n@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: backend-1751323184989-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764\ngetEdgePosition @ @xyflow_react.js?v=aeae1756:4275\n(anonymous) @ @xyflow_react.js?v=aeae1756:8112\nmemoizedSelector @ chunk-XVNVK2FE.js?v=aeae1756:117\n(anonymous) @ chunk-XVNVK2FE.js?v=aeae1756:126\ncheckIfSnapshotChanged @ chunk-BVI7NZOO.js?v=aeae1756:11990\nhandleStoreChange @ chunk-BVI7NZOO.js?v=aeae1756:11980\n(anonymous) @ chunk-XVNVK2FE.js?v=aeae1756:172\nsetState @ chunk-XVNVK2FE.js?v=aeae1756:172\nhandleNodeClick @ @xyflow_react.js?v=aeae1756:7187\nonSelectNodeHandler @ @xyflow_react.js?v=aeae1756:7654\ncallCallback2 @ chunk-BVI7NZOO.js?v=aeae1756:3674\ninvokeGuardedCallbackDev @ chunk-BVI7NZOO.js?v=aeae1756:3699\ninvokeGuardedCallback @ chunk-BVI7NZOO.js?v=aeae1756:3733\ninvokeGuardedCallbackAndCatchFirstError @ chunk-BVI7NZOO.js?v=aeae1756:3736\nexecuteDispatch @ chunk-BVI7NZOO.js?v=aeae1756:7014\nprocessDispatchQueueItemsInOrder @ chunk-BVI7NZOO.js?v=aeae1756:7034\nprocessDispatchQueue @ chunk-BVI7NZOO.js?v=aeae1756:7043\ndispatchEventsForPlugins @ chunk-BVI7NZOO.js?v=aeae1756:7051\n(anonymous) @ chunk-BVI7NZOO.js?v=aeae1756:7174\nbatchedUpdates$1 @ chunk-BVI7NZOO.js?v=aeae1756:18913\nbatchedUpdates @ chunk-BVI7NZOO.js?v=aeae1756:3579\ndispatchEventForPluginEventSystem @ chunk-BVI7NZOO.js?v=aeae1756:7173\ndispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-BVI7NZOO.js?v=aeae1756:5478\ndispatchEvent @ chunk-BVI7NZOO.js?v=aeae1756:5472\ndispatchDiscreteEvent @ chunk-BVI7NZOO.js?v=aeae1756:5449Understand this warning\nheadless:1 The resource https://w-corp-staticblitz.com/fetch.worker.6e337437.js was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.[I"
+            },
+            "2": {
+              "id": 2,
+              "type": "text",
+              "content": "@xyflow_react.js?v=aeae1756:3764 [React Flow]: Couldn't create edge for target handle id: \"null\", edge id: backend-1751323184989-to-sandbox-1751323185690. Help: https://reactflow.dev/error#008\ndevWarn @ @xyflow_react.js?v=aeae1756:3764\ngetEdgePosition @ @xyflow_react.js?v=aeae1756:4275\n(anonymous) @ @xyflow_react.js?v=aeae1756:8112\nmemoizedSelector @ chunk-XVNVK2FE.js?v=aeae1756:117\n(anonymous) @ chunk-XVNVK2FE.js?v=aeae1756:126\ncheckIfSnapshotChanged @ chunk-BVI7NZOO.js?v=aeae1756:11990\nhandleStoreChange @ chunk-BVI7NZOO.js?v=aeae1756:11980\n(anonymous) @ chunk-XVNVK2FE.js?v=aeae1756:172\nsetState @ chunk-XVNVK2FE.js?v=aeae1756:172\nhandleNodeClick @ @xyflow_react.js?v=aeae1756:7187\nonSelectNodeHandler @ @xyflow_react.js?v=aeae1756:7654\ncallCallback2 @ chunk-BVI7NZOO.js?v=aeae1756:3674\ninvokeGuardedCallbackDev @ chunk-BVI7NZOO.js?v=aeae1756:3699\ninvokeGuardedCallback @ chunk-BVI7NZOO.js?v=aeae1756:3733\ninvokeGuardedCallbackAndCatchFirstError @ chunk-BVI7NZOO.js?v=aeae1756:3736\nexecuteDispatch @ chunk-BVI7NZOO.js?v=aeae1756:7014\nprocessDispatchQueueItemsInOrder @ chunk-BVI7NZOO.js?v=aeae1756:7034\nprocessDispatchQueue @ chunk-BVI7NZOO.js?v=aeae1756:7043\ndispatchEventsForPlugins @ chunk-BVI7NZOO.js?v=aeae1756:7051\n(anonymous) @ chunk-BVI7NZOO.js?v=aeae1756:7174\nbatchedUpdates$1 @ chunk-BVI7NZOO.js?v=aeae1756:18913\nbatchedUpdates @ chunk-BVI7NZOO.js?v=aeae1756:3579\ndispatchEventForPluginEventSystem @ chunk-BVI7NZOO.js?v=aeae1756:7173\ndispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-BVI7NZOO.js?v=aeae1756:5478\ndispatchEvent @ chunk-BVI7NZOO.js?v=aeae1756:5472\ndispatchDiscreteEvent @ chunk-BVI7NZOO.js?v=aeae1756:5449Understand this warning\nheadless:1 The resource https://w-corp-staticblitz.com/fetch.worker.6e337437.js was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally."
+            }
+          }
+        },
+        {
+          "display": "there is id:sandbox- and thats it no number nothing. im sure its running but not too sure how we can get it to pass it on to it. perhapsalso no edge lining from ui agent to sandbox. even in static view it says no files generated yet..",
+          "pastedContents": {}
+        },
+        {
+          "display": "its still causing same issue, that its not able to read from ui agent. wouldnt it be better if we auto install&run a sandbox or be able to pull what ever files from ui agent? this is i wanted the visual effect on this lines between nodes but there isnt one from uiagent to livepreview node. also there is two of the same node but different name is keep popuping up. one is live preview and sandbox agent.",
+          "pastedContents": {}
+        },
+        {
+          "display": "🧠 Generated Code Files\n0 files generated by AI agents  this is all i get, so probably when we install and start its unable to read what other agents previewd. ",
+          "pastedContents": {}
+        },
+        {
+          "display": "so i went through the link at bottom of node where it says Preview:url the page says You're almost there!\nIn order to see your preview, you need to connect this tab to its project.\n\nTo avoid seeing this screen, you can configure your browser.\n\nConnect to Project ////////// do i need to connect this or something? i just wanted this to show up in the node without doing all this manually",
+          "pastedContents": {}
+        },
+        {
+          "display": "oh it works! but when i click install&start button. it just says Welcome to NeuronForge Sandbox\nYour app will appear here as agents build it. i think its unable to read what ui agent and backend agent went through",
+          "pastedContents": {}
+        },
+        {
+          "display": "should we try pushing this to our github? maybe it will work when its actually online because of stackblitz webcontainer coi problem. or [Pasted text #1 +60 lines] choose what makes sense for me",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "✅ Solution: Enable Cross-Origin Isolation (COI)\nTo use SharedArrayBuffer, your app must be served with these headers:\n\nh\n복사\n편집\nCross-Origin-Opener-Policy: same-origin\nCross-Origin-Embedder-Policy: require-corp\n🛠️ How to Fix It\n🔹 If you’re using Vite:\nYou cannot run it from localhost without extra configuration. But you have options:\n\n✅ Option 1: Use vite-plugin-coi (recommended for dev)\nInstall the plugin:\n\nbash\n복사\n편집\npnpm add vite-plugin-coi -D\nThen add it to vite.config.ts:\n\nts\n복사\n편집\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport { coiPlugin } from 'vite-plugin-coi';\n\nexport default defineConfig({\n  plugins: [react(), coiPlugin()],\n});\nThis automatically injects the needed headers for local dev.\n\n✅ Option 2: Serve with Static File Server that Adds COI Headers\nIf you deploy or serve statically, use serve or another tool that supports headers:\n\nbash\n복사\n편집\nserve -s dist --cors\n(You’d need a more advanced config to inject COOP and COEP headers.)\n\n✅ Option 3: Use a Secure Hosting Environment (e.g. Cloudflare Pages, Vercel)\nThese support setting headers like:\n\nhttp\n복사\n편집\nheaders:\n  - source: \"**\"\n    headers:\n      - key: \"Cross-Origin-Opener-Policy\"\n        value: \"same-origin\"\n      - key: \"Cross-Origin-Embedder-Policy\"\n        value: \"require-corp\"\n🚨 Important Notes\nThis restriction is browser security policy, not your code.\n\nChrome, Firefox, and Edge all block SharedArrayBuffer unless COI is enabled.\n\nWebContainer won't boot without it."
+            }
+          }
+        },
+        {
+          "display": " Static File Preview\nWebContainer failed, showing generated files:\n\nNo files generated yet...\n\n0 files received from agents /// and in sandbox agent it still say failed to initialize webcontainer: sharedarraybuffer not avaiable - cross-origin isolation required",
+          "pastedContents": {}
+        },
+        {
+          "display": "Access to fetch at 'https://api.anthropic.com/v1/messages' from origin 'http://localhost:5173' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error\napi.anthropic.com/v1/messages:1 ",
+          "pastedContents": {}
+        },
+        {
+          "display": "also the api key i got from anthropic is unable to verify, can we fix that",
+          "pastedContents": {}
+        },
+        {
+          "display": "are our livepreview node connected to eachother? ",
+          "pastedContents": {}
+        },
+        {
+          "display": "this error in our canvans main page console : lockdown-install.js:1 SES_UNCAUGHT_EXCEPTION: null\n\nFlowCanvas.tsx:103 onNodesChange called with: \n(4) [{…}, {…}, {…}, {…}]\nFlowCanvas.tsx:115 Applying dimensions change to node manager-1751311079630: \n{id: 'manager-1751311079630', type: 'dimensions', dimensions: {…}}\nFlowCanvas.tsx:115 Applying dimensions change to node sandbox-1751311079634: \n{id: 'sandbox-1751311079634', type: 'dimensions', dimensions: {…}}\nFlowCanvas.tsx:115 Applying dimensions change to node ui-1751311079661: \n{id: 'ui-1751311079661', type: 'dimensions', dimensions: {…}}\nFlowCanvas.tsx:115 Applying dimensions change to node backend-1751311080136: \n{id: 'backend-1751311080136', type: 'dimensions', dimensions: {…}}\nFlowCanvas.tsx:148 Setting updated nodes: 4       its keep generating",
+          "pastedContents": {}
+        },
+        {
+          "display": "npm run dev",
+          "pastedContents": {}
+        },
+        {
+          "display": "run app again",
+          "pastedContents": {}
+        },
+        {
+          "display": "big problem, something in our code is keep making the main website generating endless of error. memory leak?",
+          "pastedContents": {}
+        },
+        {
+          "display": "i am unable to switch keys, i have both of the api in the settings",
+          "pastedContents": {}
+        },
+        {
+          "display": "is there anyway to switch the api from gpt to anthropic through the setting dashboard?",
+          "pastedContents": {}
+        },
+        {
+          "display": "still blank page, live preview node console error with failing to initialize webcontainer : sharedarraybuffer not available - cross-origin isolation required.because of this its keep putting me into static view, and i have no way to go from static to container view. .. maybe chatgpt4 is bad at creating the whole webpackages? ",
+          "pastedContents": {}
+        },
+        {
+          "display": "still blank page or not being able to render. i do have this warningin console, but i dont think this is causing it :(index):64 cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation\n(anonymous)    @    (index):64  /// if our ai agent prompt thats in first line is causing this, can we have prompt saved in different location ? like prompt-for-neuroforge-ai.md?(i think this is what they do in prompt-to-app generating services))",
+          "pastedContents": {}
+        },
+        {
+          "display": "perhaps its not showing because we pormpted it to show only html. our app should be able to display anything the first ai agent create. either if its html or tsx. ",
+          "pastedContents": {}
+        },
+        {
+          "display": "when container liveview button is clicked, it shows blank page. i went and inspected the page. the code is there but page is blank. on our backend agent node, it shows all these informations about techstack, node.js, postgresSQL and stuff but is it really using it? or its just placecard? ",
+          "pastedContents": {}
+        },
+        {
+          "display": "html works, now when i refresh the page to start another project, the livepreview node still shows generated page from other project before, even if preveiew url is clearly different. still an error message about failed initializing webcontainer// also i would like our live preview page to only shows what we will be seeing on website (like i dont want it show other information about the website formats)",
+          "pastedContents": {}
+        },
+        {
+          "display": "so can you updateme whats been updated ",
+          "pastedContents": {}
+        },
+        {
+          "display": "resizing doesnt work, but lets fix this later.  its same error failed to initialize webcontainer error. it might have to do with logic , because i wanted to test out how it does so i typed \"build me simple html one page profile website with no backend\" and it generated backend agent and ui agent generated bunch of tsx files.",
+          "pastedContents": {}
+        },
+        {
+          "display": "could it be because its not connected to backend? im able to open the link, thats a good thing. i still get failed to initialize webcontainer: sharedarraybuffer not available - cross-origin isolation required. // or is it because we are limiting how many webcontainers?// also after trying to resize the node seems to follow around mouse// the node to node connection line is missing from gui",
+          "pastedContents": {}
+        },
+        {
+          "display": "just wondering is it suppose to only shows static mode? it still only shows 🎉 Live Preview: App Component\n✨ AI-Generated React Application\n\n3 components • 7 files generated\n📁 View Generated Source Code (7 files)\n⚛️ src/App.tsx (223 chars)\n⚛️ src/components/Chart.tsx (851 chars)\n🎨 src/App.css (272 chars)\n⚛️ src/components/ChartComponent.tsx (557 chars)\n📜 server.ts (380 chars)\n📜 routes/apiRoutes.ts (787 chars)\n📜 types/index.ts (74 chars)\n⚡ Static Preview Mode - Your AI-generated app rendered instantly! ////// in live preview node. i would also like it that i can adjust these node size and be able to click on the link at the bottom of the live preview node that says Preview: blobl:url",
+          "pastedContents": {}
+        },
+        {
+          "display": "the live preview node does seems like its passing whats shown in ui agent but its showing generated files. Generated Code Files\n10 files generated by AI agents\n\n📜 src/models/index.js\n[object Promise]\n📜 src/server.js\n[object Promise]\n📜 server.ts\nimport express, { Request, Response, NextFunction } from 'express';\nimport cors from 'cors';\nimport { apiRoutes } from './routes/apiRoutes';\n\nconst app = express();\n\napp.use(cors());\napp.use(express.json());\n\napp.use('/api', apiRoutes);\n\n// Error handler middleware\napp.use((err: any, req: Request, res: Response, next: NextFunction) => {\n  res.status(err.status || 500).send({ error: err.message });\n});\n\napp.listen(3000, () => {\n  console.log('Server is up and running on port 3000');\n});     /// in this way, so i guess we need to figure out the way to take all these and render it?",
+          "pastedContents": {}
+        },
+        {
+          "display": "it will not create anything at live preview node. it just says waiting for ai agents.. also in console output it says, failed to initialize webcontainer: datacloneerror: failed to execute 'postmessage' on 'worker': sharedarraybuffer transfer requires self.crossoriginisolated.  and  failed to initialize webcontainer: error: unable to create more instances",
+          "pastedContents": {}
+        },
+        {
+          "display": "now i get the big error window saying \"Something went wrong\nAn error occurred while rendering the application.\n\nError Details\nTypeError: file.content.slice is not a function\" the website stays up. ",
+          "pastedContents": {}
+        },
+        {
+          "display": "i was able to put in api and enter prompt, it generated bunch of nodes. but when i tried to move the nodes the website went blank. i checked the chrome console and it shows ,The resource https://w-corp-staticblitz.com/fetch.worker.6e337437.js was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. also A form field element should have an id or name attribute\nContent Security Policy of your site blocks the use of 'eval' in JavaScript`\nDeprecated feature used\nNo label associated with a form field\nSharedArrayBuffer usage is restricted to cross-origin isolated sites",
+          "pastedContents": {}
+        },
+        {
+          "display": "[Pasted text #1 +58 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "[plugin:vite:react-babel] /home/ariappa/src/components/Nodes/UIAgentNode.tsx: Unexpected reserved word 'await'. (105:25)\n  108 |           'Generated App',\n/home/ariappa/src/components/Nodes/UIAgentNode.tsx:105:25\n103|        try {\n104|          // Attempt AI generation\n105|          const aiResult = await generateAIContent(\n   |                           ^\n106|            'ui',\n107|            uiData.description || 'Create a React application',\n    at constructor (/home/ariappa/node_modules/@babel/parser/lib/index.js:363:19)\n    at TypeScriptParserMixin.raise (/home/ariappa/node_modules/@babel/parser/lib/index.js:6612:19)\n    at TypeScriptParserMixin.checkReservedWord (/home/ariappa/node_modules/@babel/parser/lib/index.js:12180:12)\n    at TypeScriptParserMixin.checkReservedWord (/home/ariappa/node_modules/@babel/parser/lib/index.js:9349:13)\n    at TypeScriptParserMixin.parseIdentifierName (/home/ariappa/node_modules/@babel/parser/lib/index.js:12160:12)\n    at TypeScriptParserMixin.parseIdentifier (/home/ariappa/node_modules/@babel/parser/lib/index.js:12130:23)\n    at TypeScriptParserMixin.parseExprAtom (/home/ariappa/node_modules/@babel/parser/lib/index.js:11366:27)\n    at TypeScriptParserMixin.parseExprAtom (/home/ariappa/node_modules/@babel/parser/lib/index.js:4779:20)\n    at TypeScriptParserMixin.parseExprSubscripts (/home/ariappa/node_modules/@babel/parser/lib/index.js:11026:23)\n    at TypeScriptParserMixin.parseUpdate (/home/ariappa/node_modules/@babel/parser/lib/index.js:11011:21)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/ariappa/node_modules/@babel/parser/lib/index.js:10991:23)\n    at TypeScriptParserMixin.parseMaybeUnary (/home/ariappa/node_modules/@babel/parser/lib/index.js:9808:18)\n    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/ariappa/node_modules/@babel/parser/lib/index.js:10844:61)\n    at TypeScriptParserMixin.parseExprOps (/home/ariappa/node_modules/@babel/parser/lib/index.js:10849:23)\n    at TypeScriptParserMixin.parseMaybeConditional (/home/ariappa/node_modules/@babel/parser/lib/index.js:10826:23)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/ariappa/node_modules/@babel/parser/lib/index.js:10779:21)\n    at TypeScriptParserMixin.parseMaybeAssign (/home/ariappa/node_modules/@babel/parser/lib/index.js:9757:20)\n    at /home/ariappa/node_modules/@babel/parser/lib/index.js:10748:39\n    at TypeScriptParserMixin.allowInAnd (/home/ariappa/node_modules/@babel/parser/lib/index.js:12370:16)\n    at TypeScriptParserMixin.parseMaybeAssignAllowIn (/home/ariappa/node_modules/@babel/parser/lib/index.js:10748:17)\n    at TypeScriptParserMixin.parseVar (/home/ariappa/node_modules/@babel/parser/lib/index.js:13317:91)\n    at TypeScriptParserMixin.parseVarStatement (/home/ariappa/node_modules/@babel/parser/lib/index.js:13163:10)\n    at TypeScriptParserMixin.parseVarStatement (/home/ariappa/node_modules/@babel/parser/lib/index.js:9449:31)\n    at TypeScriptParserMixin.parseStatementContent (/home/ariappa/node_modules/@babel/parser/lib/index.js:12784:23)\n    at TypeScriptParserMixin.parseStatementContent (/home/ariappa/node_modules/@babel/parser/lib/index.js:9483:18)\n    at TypeScriptParserMixin.parseStatementLike (/home/ariappa/node_modules/@babel/parser/lib/index.js:12699:17)\n    at TypeScriptParserMixin.parseStatementListItem (/home/ariappa/node_modules/@babel/parser/lib/index.js:12679:17)\n    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/home/ariappa/node_modules/@babel/parser/lib/index.js:13249:61)\n    at TypeScriptParserMixin.parseBlockBody (/home/ariappa/node_modules/@babel/parser/lib/index.js:13242:10)\n    at TypeScriptParserMixin.parseBlock (/home/ariappa/node_modules/@babel/parser/lib/index.js:13230:10)\n    at TypeScriptParserMixin.parseTryStatement (/home/ariappa/node_modules/@babel/parser/lib/index.js:13138:23)\n    at TypeScriptParserMixin.parseStatementContent (/home/ariappa/node_modules/@babel/parser/lib/index.js:12736:21)\n    at TypeScriptParserMixin.parseStatementContent (/home/ariappa/node_modules/@babel/parser/lib/index.js:9483:18)\n    at TypeScriptParserMixin.parseStatementLike (/home/ariappa/node_modules/@babel/parser/lib/index.js:12699:17)\n    at TypeScriptParserMixin.parseStatementListItem (/home/ariappa/node_modules/@babel/parser/lib/index.js:12679:17)\n    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/home/ariappa/node_modules/@babel/parser/lib/index.js:13249:61)\n    at TypeScriptParserMixin.parseBlockBody (/home/ariappa/node_modules/@babel/parser/lib/index.js:13242:10)\n    at TypeScriptParserMixin.parseBlock (/home/ariappa/node_modules/@babel/parser/lib/index.js:13230:10)\n    at TypeScriptParserMixin.parseStatementContent (/home/ariappa/node_modules/@babel/parser/lib/index.js:12791:21)\n    at TypeScriptParserMixin.parseStatementContent (/home/ariappa/node_modules/@babel/parser/lib/index.js:9483:18)\n    at TypeScriptParserMixin.parseStatementLike (/home/ariappa/node_modules/@babel/parser/lib/index.js:12699:17)\n    at TypeScriptParserMixin.parseStatementOrSloppyAnnexBFunctionDeclaration (/home/ariappa/node_modules/@babel/parser/lib/index.js:12689:17)\n    at TypeScriptParserMixin.parseIfStatement (/home/ariappa/node_modules/@babel/parser/lib/index.js:13063:28)\n    at TypeScriptParserMixin.parseStatementContent (/home/ariappa/node_modules/@babel/parser/lib/index.js:12728:21)\n    at TypeScriptParserMixin.parseStatementContent (/home/ariappa/node_modules/@babel/parser/lib/index.js:9483:18)\n    at TypeScriptParserMixin.parseStatementLike (/home/ariappa/node_modules/@babel/parser/lib/index.js:12699:17)\n    at TypeScriptParserMixin.parseStatementListItem (/home/ariappa/node_modules/@babel/parser/lib/index.js:12679:17)\n    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/home/ariappa/node_modules/@babel/parser/lib/index.js:13249:61)\n    at TypeScriptParserMixin.parseBlockBody (/home/ariappa/node_modules/@babel/parser/lib/index.js:13242:10)\n    at TypeScriptParserMixin.parseBlock (/home/ariappa/node_modules/@babel/parser/lib/index.js:13230:10"
+            }
+          }
+        },
+        {
+          "display": "continue",
+          "pastedContents": {}
+        },
+        {
+          "display": "[Pasted text #1 +37 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "**Feature/Component**: Real Prompt-Aware File Generation  \n**Agent Type**: UI + Backend Agents  \n**Objective**: Connect OpenAI API (or Claude API) to generate actual React and Express code based on user prompts. Replace the current template file generators with prompt-aware generation logic.\n\n**Relevant Files**:\n- utils/fileContentGenerators.ts\n- components/Nodes/UIAgentNode.tsx\n- components/Nodes/BackendNode.tsx\n- stores/apiKeysStore.ts (new)\n- services/aiService.ts (new)\n\n**Functionality Goals**:\n- Use real AI API to convert assigned task (e.g. “Create NoteEditor”) into file content\n- Replace static templates with dynamic prompt-based results\n- Support multi-file output (e.g. NoteEditor.tsx + utils.ts)\n- Add fallback to templates if API fails\n\n**API Setup**:\n- Load OpenAI or Claude API key from env or Zustand store\n- Call completion/chat API with a system prompt like:\n  - “You are a coding assistant. Generate a complete React component called NoteEditor for a notes app.”\n- Stream or return response, parse into files\n\n**Bonus**:\n- Show loading spinner while fetching real output\n- Add settings panel to input/change API key\n- Support both OpenAI and Anthropic models\n\n**Constraints**:\n- Must return complete code with filename + content\n- Should not require user to manually select models per agent\n- Add retry logic or error message if API fails\n\n**Success Criteria**:\n- Prompt like \"Build a blog app\"\n- UI + Backend agents each generate real code from AI\n- Files sync to Sandbox and preview shows custom working app\n"
+            }
+          }
+        },
+        {
+          "display": "oohhh i think its working. it does say static preview mode - webcontainer not available in this environment at bottom of the preview.maybe its not showing the custom made page since we didnt connect the ai api? but its working kinda",
+          "pastedContents": {}
+        },
+        {
+          "display": "the first console msg says \"webcontainer support check failed - attempting manual initizalzation\" and lots of fail messages, at the end there are errors that syas \" failed to initizalize webcontainer : datacloneerror: failed to execute 'postmessage' on 'worker' : saredarraybuffer transfer require self.crossorigisolated.",
+          "pastedContents": {}
+        },
+        {
+          "display": "so, the \"force reset\" button is dissapeared. it does show something in \"live preview node\" but its showing our main page. so like the main page is inside of the \"live preview\" node.",
+          "pastedContents": {}
+        },
+        {
+          "display": "it says \"failed to initialize container...\" then \"try running  on https or with proper headers\" and goes \" failed to initiazlie webcomtainerL errorL unable to create more instances\" <- this displayed twice",
+          "pastedContents": {}
+        },
+        {
+          "display": "sorry, it shows \"failed to initalize webcomtainer: error: unable to create more instances\"",
+          "pastedContents": {}
+        },
+        {
+          "display": "it shows ",
+          "pastedContents": {}
+        },
+        {
+          "display": "first it shows \"⚠️ WebContainer Support Check Failed\nSupport check failed but you can still try to initialize:\n\n✅ Modern browser detected\n❓ Cross-origin isolation may be missing\n💡 Development mode may still work\nClick \"Initialize\" to attempt manual startup\"  ",
+          "pastedContents": {}
+        },
+        {
+          "display": "we do have live preview node (idle) . it says WebContainer Not Supported\nThis environment does not support WebContainer. Please ensure:\n\nYou're using a modern browser\nThe page is served over HTTPS\nCross-origin isolation headers are set",
+          "pastedContents": {}
+        },
+        {
+          "display": "will this help? [Pasted text #1 +22 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "nt ui-1751252358715 executing stage: Component Integration\n8nodesStore.ts:366 No sandbox agent available to receive file update\nsendFileUpdate @ nodesStore.ts:366Understand this warning\n2UIAgentNode.tsx:225 ✅ UI Agent ui-1751252358715 completed stage 4/5: Component Integration\n2UIAgentNode.tsx:136 🔄 UI Agent ui-1751252358715 executing stage: Preparing Preview\n2BackendNode.tsx:138 🔄 Backend Agent backend-1751252359190 executing stage: Authentication\n2nodesStore.ts:366 No sandbox agent available to receive file update\nsendFileUpdate @ nodesStore.ts:366Understand this warning\n2UIAgentNode.tsx:225 ✅ UI Agent ui-1751252358715 completed stage 5/5: Preparing Preview\n2nodesStore.ts:366 No sandbox agent available to receive file update\nsendFileUpdate @ nodesStore.ts:366Understand this warning\nUIAgentNode.tsx:129 ✅ UI Agent ui-1751252358715 completed all stages and sent 2 files to sandbox\n2nodesStore.ts:366 No sandbox agent available to receive file update\nsendFileUpdate @ nodesStore.ts:366Understand this warning\nUIAgentNode.tsx:129 ✅ UI Agent ui-1751252358715 completed all stages and sent 2 files to sandbox\n2BackendNode.tsx:138 🔄 Backend Agent backend-1751252359190 executing stage: Testing & Validation\nnodesStore.ts:366 No sandbox agent available to receive file update\nsendFileUpdate @ nodesStore.ts:366Understand this warning\nBackendNode.tsx:131 ✅ Backend Agent backend-1751252359190 completed all stages - API ready on port 3001, sent 1 files to sandbox\n9nodesStore.ts:366 No sandbox agent available to receive file update\nsendFileUpdate @ nodesStore.ts:366Understand this warning\nBackendNode.tsx:131 ✅ Backend Agent backend-1751252359190 completed all stages - API ready on port 3001, sent 1 files to sandbox\n3@xyflow_react.js?v=8d76c96d:3764 [React Flow]: It seems that you are trying to drag a node that is not initialized. Please use onNodesChange as explained in the docs. Help: https://reactflow.dev/error#015"
+            }
+          }
+        },
+        {
+          "display": "sorry that was mistake, please continue",
+          "pastedContents": {}
+        },
+        {
+          "display": "live preview in ui agent is not showing anything in the sandbox. care to tell me what might be causing this? ",
+          "pastedContents": {}
+        },
+        {
+          "display": "just wondering, ui agent is always stuck at styling and im not able to live preview. is this normal at this step?",
+          "pastedContents": {}
+        },
+        {
+          "display": "[Pasted text #1 +31 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "**Feature/Component**: File Synchronization from Agents → Sandbox  \n**Agent Type**: UI + Backend → Sandbox Agent  \n**Objective**: Send generated files from UIAgent and BackendAgent to the Sandbox Agent using messageBus or Zustand. Allow Sandbox to render a live app preview based on the combined files.\n\n**Relevant Files**:\n- stores/nodesStore.ts\n- stores/sandboxStore.ts\n- components/Nodes/SandboxNode.tsx\n- utils/webcontainerHelpers.ts\n- types/messages.ts (optional)\n\n**Functionality Goals**:\n- When UI or Backend Agent completes a task, send a `file_update` message with:\n  - File path\n  - File content\n- Sandbox Agent listens for those updates and:\n  - Writes them to the in-memory filesystem (WebContainer)\n  - Triggers dependency install (once) and dev server boot\n  - Updates iframe with the new app preview\n\n**File Example**:\n```ts\n{\n  type: \"file_update\",\n  from: \"ui-agent-123\",\n  to: \"sandbox\",\n  payload: {\n    path: \"/src/components/NoteEditor.tsx\",\n    content: \"export default function NoteEditor() { return <div>Editor</div>; }\"\n  }\n}\n"
+            }
+          }
+        },
+        {
+          "display": "[Pasted text #1 +41 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "**Feature/Component**: Agent Task Execution – Backend Agent  \n**Agent Type**: Backend Agent  \n**Objective**: Enable BackendAgentNode to receive tasks from the Manager Agent and simulate generating backend logic (e.g., Express routes, services, database setup).\n\n**Relevant Files**:\n- components/Nodes/BackendNode.tsx\n- types/agent.ts\n- stores/nodesStore.ts\n\n**Functionality Goals**:\n- Display the assigned task (e.g., \"Set up Notes API with CRUD routes\")\n- Simulate backend task stages:\n  - Analyzing API structure\n  - Creating route handlers\n  - Connecting to database\n  - Writing middleware\n  - Preparing API preview\n\n- Generate mock files like:\n  - `/routes/notes.ts`\n  - `/controllers/notesController.ts`\n  - `/db/schema.ts`\n\n- Show task progress with visual indicators and file list\n\n**UI Design**:\n- Progress stage indicators\n- File generation view\n- Console log output\n- “Run API Preview” button placeholder (future integration with Sandbox)\n\n**Constraints**:\n- Task stages and timing should feel realistic (like the UI Agent)\n- No need for real server code yet — just visual simulation\n- Use Zustand for state + reactivity\n\n**Success Criteria**:\n- When Manager spawns BackendAgentNode, it auto-starts task execution\n- Progress bar updates through 5 clear backend stages\n- File generation list populates live\n- Logs show backend execution stages\n"
+            }
+          }
+        },
+        {
+          "display": "[Pasted text #1 +30 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "**Feature/Component**: Agent Task Execution – UI Agent  \n**Agent Type**: UI Agent  \n**Objective**: Enable UIAgentNode to receive its assigned task from Manager and start generating relevant React component scaffolds (just visual representation for now).\n\n**Relevant Files**:\n- components/Nodes/UIAgentNode.tsx\n- stores/nodesStore.ts\n- types/agent.ts\n\n**Functionality Goals**:\n- Show task data passed from Manager (e.g. “Build NoteCard component”)\n- Display a simulated list of files it’s working on (e.g., NoteCard.tsx, Editor.tsx)\n- Add progress indicator or completion bar\n- Use realistic mock data and status transitions\n\n**UI Design**:\n- Show agent’s name + status (e.g. “scaffolding UI”)\n- Progress bar with steps like:\n  - Analyzing task\n  - Creating files\n  - Preparing preview\n\n**Constraints**:\n- No real file generation yet — just visual + mock state\n- Agent must render consistently even if multiple UI agents are spawned\n- Logs can be printed to console\n\n**Bonus**:\n- Trigger task start when spawned\n- Progress completes over a few seconds with fake stages\n"
+            }
+          }
+        },
+        {
+          "display": "[Pasted text #1 +34 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "**Feature/Component**: Prompt Parsing + Manager Agent Logic  \n**Agent Type**: Manager Agent  \n**Objective**: Enable the ManagerNode to parse natural language user prompts and break them into tasks for other agents (e.g., UIAgent, BackendAgent). Simulate task assignment visually and log it.\n\n**Relevant Files**:\n- components/Canvas/PromptPanel.tsx\n- components/Nodes/ManagerNode.tsx\n- stores/nodesStore.ts\n- types/messages.ts (if needed)\n\n**Functionality Goals**:\n- Add input box to PromptPanel where user can enter a high-level task (e.g., “Build a chat app”)\n- On submit, route prompt to ManagerNode\n- ManagerNode:\n  - Parses prompt into subtasks (mock or Claude-generated)\n  - Spawns necessary agent nodes with sample task info\n  - Logs task breakdown to console (for now)\n- Connect newly spawned nodes to Manager\n\n**UI Behavior**:\n- Prompt input at top or left panel\n- Output visually shows new agent nodes appearing on canvas\n- Optional: Use different edge styles to show “task assignment”\n\n**Constraints**:\n- Parsing logic can be mocked (you can hardcode subtasks for now)\n- Node spawning must update Zustand + re-render canvas\n- Don’t worry about real code generation yet — just prompt → plan → spawn\n\n**Success Criteria**:\n- I can enter “Build a notes app”\n- ManagerNode parses it and spawns UI + Backend agent nodes\n- Connection lines show logical flow\n- Console logs show task breakdown\n"
+            }
+          }
+        },
+        {
+          "display": "[Pasted text #1 +33 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "**Feature/Component**: Node Scaffolding  \n**Agent Type**: Frontend Agent  \n**Objective**: Enable draggable, connectable agent nodes inside the XYFlow canvas. Implement basic node types: `ManagerNode`, `UIAgentNode`, `BackendNode`.\n\n**Relevant Files**:\n- components/Canvas/FlowCanvas.tsx\n- components/Nodes/BaseNode.tsx\n- components/Nodes/ManagerNode.tsx\n- components/Nodes/UIAgentNode.tsx\n- components/Nodes/BackendNode.tsx\n- types/nodes.ts\n\n**Functionality Requirements**:\n- Allow dynamic node spawning (just static list or sample nodes for now)\n- Use `<ReactFlow>` from `@xyflow/react`\n- Each node should be draggable and connectable\n- Each node should have:\n  - ID, type, label, and status (placeholder)\n  - Tailwind-styled box with a title bar\n  - Placeholder inner panel (we'll add editors later)\n\n**Design**:\n- Distinct color/theme for each agent type\n- Rounded boxes with shadows\n- Use `BaseNode` as a styled wrapper component\n\n**Bonus if time**:\n- Show connection lines between nodes\n- Log connections to console for now\n\n**Constraints**:\n- Focus only on visuals and movement — no task logic yet\n- Don’t build sandbox or messageBus yet\n"
+            }
+          }
+        },
+        {
+          "display": "[Pasted text #1 +32 lines]",
+          "pastedContents": {
+            "1": {
+              "id": 1,
+              "type": "text",
+              "content": "**Feature/Component**: Initial Canvas Shell + Live Server  \n**Agent Type**: Frontend Agent  \n**Objective**: \n1. Create the base layout for NeuronForge using React, Tailwind, and @xyflow/react.\n2. Set up Vite so I can run the project live in the browser using `pnpm dev`.\n\n**Relevant Files**:\n- components/Canvas/CanvasLayout.tsx\n- components/Canvas/PromptPanel.tsx\n- components/Canvas/FlowCanvas.tsx\n- main.tsx\n- index.html\n- vite.config.ts\n- styles/globals.css\n- package.json\n\n**UI Layout Requirements**:\n- Left: PromptPanel (for future chat input)\n- Right: FlowCanvas (canvas area using `<ReactFlow />`)\n- Header: Top bar with app title and placeholder buttons\n- Responsive layout using Tailwind\n- No node logic yet — canvas can be empty\n\n**Vite Setup Requirements**:\n- Add Vite config if missing\n- Include dev script in package.json\n- Ensure Tailwind is configured properly\n- Enable hot reload for easy iteration\n\n**Success Criteria**:\n- I can run `pnpm install && pnpm dev` in WSL and visit http://localhost:5173 to see the UI\n- Layout should lo\n"
+            }
+          }
+        },
+        {
+          "display": "**Feature/Component**: Sandbox Initialization  \n**Agent Type**: Sandbox Agent  \n**Objective**: Create `SandboxNode.tsx` that boots a WebContainer instance, syncs files from Zustand, and renders a live preview using iframe.  \n**Relevant Files**:\n- components/Nodes/SandboxNode.tsx\n- stores/sandboxStore.ts\n- utils/webcontainerHelpers.ts\n\n**Constraints**:\n- Use `@webcontainer/api`\n- Store lifecycle and files in `sandboxStore`\n- Show iframe preview with `srcDoc`\n- Display errors/output in a console panel\n",
+          "pastedContents": {}
+        },
+        {
+          "display": "i've updated the claude.md check it please",
+          "pastedContents": {}
+        },
+        {
+          "display": "just create empty claude.md",
+          "pastedContents": {}
+        },
+        {
+          "display": "code .",
+          "pastedContents": {}
+        },
+        {
+          "display": "/init ",
+          "pastedContents": {}
+        },
+        {
+          "display": "how do i use the custom claude command feature in claude code",
+          "pastedContents": {}
+        }
+      ],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 6,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "hasCompletedProjectOnboarding": true
+    }
+  },
+  "oauthAccount": {
+    "accountUuid": "15c8086c-34f6-4eb6-8cff-6254bd9c15c6",
+    "emailAddress": "ryubin@gmail.com",
+    "organizationUuid": "a1947bba-fcc2-4d92-a8d7-d1190f76b94a",
+    "organizationRole": "admin",
+    "workspaceRole": null,
+    "organizationName": "ryubin@gmail.com's Organization"
+  },
+  "hasCompletedOnboarding": true,
+  "lastOnboardingVersion": "1.0.35",
+  "subscriptionNoticeCount": 0,
+  "hasAvailableSubscription": false,
+  "cachedChangelog": "# Changelog\n\n## 1.0.35\n\n- Added support for MCP OAuth Authorization Server discovery\n\n## 1.0.34\n\n- Fixed a memory leak causing a MaxListenersExceededWarning message to appear\n\n## 1.0.33\n\n- Improved logging functionality with session ID support\n- Added undo functionality (Ctrl+Z and vim 'u' command)\n- Improvements to plan mode\n\n## 1.0.32\n\n- Updated loopback config for litellm\n- Added forceLoginMethod setting to bypass login selection screen\n\n## 1.0.31\n\n- Fixed a bug where ~/.claude.json would get reset when file contained invalid JSON\n\n## 1.0.30\n\n- Custom slash commands: Run bash output, @-mention files, enable thinking with thinking keywords\n- Improved file path autocomplete with filename matching\n- Added timestamps in Ctrl-r mode and fixed Ctrl-c handling\n- Enhanced jq regex support for complex filters with pipes and select\n\n## 1.0.29\n\n- Improved CJK character support in cursor navigation and rendering\n\n## 1.0.28\n\n- Slash commands: Fix selector display during history navigation\n- Resizes images before upload to prevent API size limit errors\n- Added XDG_CONFIG_HOME support to configuration directory\n- Performance optimizations for memory usage\n- New attributes (terminal.type, language) in OpenTelemetry logging\n\n## 1.0.27\n\n- Streamable HTTP MCP servers are now supported\n- Remote MCP servers (SSE and HTTP) now support OAuth\n- MCP resources can now be @-mentioned\n- /resume slash command to switch conversations within Claude Code\n\n## 1.0.25\n\n- Slash commands: moved \"project\" and \"user\" prefixes to descriptions\n- Slash commands: improved reliability for command discovery\n- Improved support for Ghostty\n- Improved web search reliability\n\n## 1.0.24\n\n- Improved /mcp output\n- Fixed a bug where settings arrays got overwritten instead of merged\n\n## 1.0.23\n\n- Released TypeScript SDK: import @anthropic-ai/claude-code to get started\n- Released Python SDK: pip install claude-code-sdk to get started\n\n## 1.0.22\n\n- SDK: Renamed `total_cost` to `total_cost_usd`\n\n## 1.0.21\n\n- Improved editing of files with tab-based indentation\n- Fix for tool_use without matching tool_result errors\n- Fixed a bug where stdio MCP server processes would linger after quitting Claude Code\n\n## 1.0.18\n\n- Added --add-dir CLI argument for specifying additional working directories\n- Added streaming input support without require -p flag\n- Improved startup performance and session storage performance\n- Added CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR environment variable to freeze working directory for bash commands\n- Added detailed MCP server tools display (/mcp)\n- MCP authentication and permission improvements\n- Added auto-reconnection for MCP SSE connections on disconnect\n- Fixed issue where pasted content was lost when dialogs appeared\n\n## 1.0.17\n\n- We now emit messages from sub-tasks in -p mode (look for the parent_tool_use_id property)\n- Fixed crashes when the VS Code diff tool is invoked multiple times quickly\n- MCP server list UI improvements\n- Update Claude Code process title to display \"claude\" instead of \"node\"\n\n## 1.0.11\n\n- Claude Code can now also be used with a Claude Pro subscription\n- Added /upgrade for smoother switching to Claude Max plans\n- Improved UI for authentication from API keys and Bedrock/Vertex/external auth tokens\n- Improved shell configuration error handling\n- Improved todo list handling during compaction\n\n## 1.0.10\n\n- Added markdown table support\n- Improved streaming performance\n\n## 1.0.8\n\n- Fixed Vertex AI region fallback when using CLOUD_ML_REGION\n- Increased default otel interval from 1s -> 5s\n- Fixed edge cases where MCP_TIMEOUT and MCP_TOOL_TIMEOUT weren't being respected\n- Fixed a regression where search tools unnecessarily asked for permissions\n- Added support for triggering thinking non-English languages\n- Improved compacting UI\n\n## 1.0.7\n\n- Renamed /allowed-tools -> /permissions\n- Migrated allowedTools and ignorePatterns from .claude.json -> settings.json\n- Deprecated claude config commands in favor of editing settings.json\n- Fixed a bug where --dangerously-skip-permissions sometimes didn't work in --print mode\n- Improved error handling for /install-github-app\n- Bugfixes, UI polish, and tool reliability improvements\n\n## 1.0.6\n\n- Improved edit reliability for tab-indented files\n- Respect CLAUDE_CONFIG_DIR everywhere\n- Reduced unnecessary tool permission prompts\n- Added support for symlinks in @file typeahead\n- Bugfixes, UI polish, and tool reliability improvements\n\n## 1.0.4\n\n- Fixed a bug where MCP tool errors weren't being parsed correctly\n\n## 1.0.1\n\n- Added `DISABLE_INTERLEAVED_THINKING` to give users the option to opt out of interleaved thinking.\n- Improved model references to show provider-specific names (Sonnet 3.7 for Bedrock, Sonnet 4 for Console)\n- Updated documentation links and OAuth process descriptions\n\n## 1.0.0\n\n- Claude Code is now generally available\n- Introducing Sonnet 4 and Opus 4 models\n\n## 0.2.125\n\n- Breaking change: Bedrock ARN passed to `ANTHROPIC_MODEL` or `ANTHROPIC_SMALL_FAST_MODEL` should no longer contain an escaped slash (specify `/` instead of `%2F`)\n- Removed `DEBUG=true` in favor of `ANTHROPIC_LOG=debug`, to log all requests\n\n## 0.2.117\n\n- Breaking change: --print JSON output now returns nested message objects, for forwards-compatibility as we introduce new metadata fields\n- Introduced settings.cleanupPeriodDays\n- Introduced CLAUDE_CODE_API_KEY_HELPER_TTL_MS env var\n- Introduced --debug mode\n\n## 0.2.108\n\n- You can now send messages to Claude while it works to steer Claude in real-time\n- Introduced BASH_DEFAULT_TIMEOUT_MS and BASH_MAX_TIMEOUT_MS env vars\n- Fixed a bug where thinking was not working in -p mode\n- Fixed a regression in /cost reporting\n- Deprecated MCP wizard interface in favor of other MCP commands\n- Lots of other bugfixes and improvements\n\n## 0.2.107\n\n- CLAUDE.md files can now import other files. Add @path/to/file.md to ./CLAUDE.md to load additional files on launch\n\n## 0.2.106\n\n- MCP SSE server configs can now specify custom headers\n- Fixed a bug where MCP permission prompt didn't always show correctly\n\n## 0.2.105\n\n- Claude can now search the web\n- Moved system & account status to /status\n- Added word movement keybindings for Vim\n- Improved latency for startup, todo tool, and file edits\n\n## 0.2.102\n\n- Improved thinking triggering reliability\n- Improved @mention reliability for images and folders\n- You can now paste multiple large chunks into one prompt\n\n## 0.2.100\n\n- Fixed a crash caused by a stack overflow error\n- Made db storage optional; missing db support disables --continue and --resume\n\n## 0.2.98\n\n- Fixed an issue where auto-compact was running twice\n\n## 0.2.96\n\n- Claude Code can now also be used with a Claude Max subscription (https://claude.ai/upgrade)\n\n## 0.2.93\n\n- Resume conversations from where you left off from with \"claude --continue\" and \"claude --resume\"\n- Claude now has access to a Todo list that helps it stay on track and be more organized\n\n## 0.2.82\n\n- Added support for --disallowedTools\n- Renamed tools for consistency: LSTool -> LS, View -> Read, etc.\n\n## 0.2.75\n\n- Hit Enter to queue up additional messages while Claude is working\n- Drag in or copy/paste image files directly into the prompt\n- @-mention files to directly add them to context\n- Run one-off MCP servers with `claude --mcp-config <path-to-file>`\n- Improved performance for filename auto-complete\n\n## 0.2.74\n\n- Added support for refreshing dynamically generated API keys (via apiKeyHelper), with a 5 minute TTL\n- Task tool can now perform writes and run bash commands\n\n## 0.2.72\n\n- Updated spinner to indicate tokens loaded and tool usage\n\n## 0.2.70\n\n- Network commands like curl are now available for Claude to use\n- Claude can now run multiple web queries in parallel\n- Pressing ESC once immediately interrupts Claude in Auto-accept mode\n\n## 0.2.69\n\n- Fixed UI glitches with improved Select component behavior\n- Enhanced terminal output display with better text truncation logic\n\n## 0.2.67\n\n- Shared project permission rules can be saved in .claude/settings.json\n\n## 0.2.66\n\n- Print mode (-p) now supports streaming output via --output-format=stream-json\n- Fixed issue where pasting could trigger memory or bash mode unexpectedly\n\n## 0.2.63\n\n- Fixed an issue where MCP tools were loaded twice, which caused tool call errors\n\n## 0.2.61\n\n- Navigate menus with vim-style keys (j/k) or bash/emacs shortcuts (Ctrl+n/p) for faster interaction\n- Enhanced image detection for more reliable clipboard paste functionality\n- Fixed an issue where ESC key could crash the conversation history selector\n\n## 0.2.59\n\n- Copy+paste images directly into your prompt\n- Improved progress indicators for bash and fetch tools\n- Bugfixes for non-interactive mode (-p)\n\n## 0.2.54\n\n- Quickly add to Memory by starting your message with '#'\n- Press ctrl+r to see full output for long tool results\n- Added support for MCP SSE transport\n\n## 0.2.53\n\n- New web fetch tool lets Claude view URLs that you paste in\n- Fixed a bug with JPEG detection\n\n## 0.2.50\n\n- New MCP \"project\" scope now allows you to add MCP servers to .mcp.json files and commit them to your repository\n\n## 0.2.49\n\n- Previous MCP server scopes have been renamed: previous \"project\" scope is now \"local\" and \"global\" scope is now \"user\"\n\n## 0.2.47\n\n- Press Tab to auto-complete file and folder names\n- Press Shift + Tab to toggle auto-accept for file edits\n- Automatic conversation compaction for infinite conversation length (toggle with /config)\n\n## 0.2.44\n\n- Ask Claude to make a plan with thinking mode: just say 'think' or 'think harder' or even 'ultrathink'\n\n## 0.2.41\n\n- MCP server startup timeout can now be configured via MCP_TIMEOUT environment variable\n- MCP server startup no longer blocks the app from starting up\n\n## 0.2.37\n\n- New /release-notes command lets you view release notes at any time\n- `claude config add/remove` commands now accept multiple values separated by commas or spaces\n\n## 0.2.36\n\n- Import MCP servers from Claude Desktop with `claude mcp add-from-claude-desktop`\n- Add MCP servers as JSON strings with `claude mcp add-json <n> <json>`\n\n## 0.2.34\n\n- Vim bindings for text input - enable with /vim or /config\n\n## 0.2.32\n\n- Interactive MCP setup wizard: Run \"claude mcp add\" to add MCP servers with a step-by-step interface\n- Fix for some PersistentShell issues\n\n## 0.2.31\n\n- Custom slash commands: Markdown files in .claude/commands/ directories now appear as custom slash commands to insert prompts into your conversation\n- MCP debug mode: Run with --mcp-debug flag to get more information about MCP server errors\n\n## 0.2.30\n\n- Added ANSI color theme for better terminal compatibility\n- Fixed issue where slash command arguments weren't being sent properly\n- (Mac-only) API keys are now stored in macOS Keychain\n\n## 0.2.26\n\n- New /approved-tools command for managing tool permissions\n- Word-level diff display for improved code readability\n- Fuzzy matching for slash commands\n\n## 0.2.21\n\n- Fuzzy matching for /commands\n",
+  "changelogLastFetched": 1751247052589,
+  "fallbackAvailableWarningThreshold": 0.5
+}

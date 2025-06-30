@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(find:*)",
+      "Bash(rg:*)",
+      "Bash(npx tsc:*)",
+      "Bash(grep:*)"
+    ],
+    "deny": []
+  }
+}

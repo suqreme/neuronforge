@@ -1,0 +1,8 @@
+[
+  {
+    "content": "Deploy to production web environment to fix CORS issues",
+    "status": "in_progress",
+    "priority": "high",
+    "id": "deploy-production"
+  }
+]
