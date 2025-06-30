@@ -40,6 +40,10 @@
       "allowedTools": [],
       "history": [
         {
+          "display": "🔍 DEBUG: Generating static preview for files: Array(0)\nindex-CdpDbieB.js:1 ✅ Valid files after filtering: Array(0)\nindex-CdpDbieB.js:1 🔍 No App.tsx found. Available files: Array(0)\nindex-CdpDbieB.js:1 🔍 Files in src/ folder: Array(0)\nindex-CdpDbieB.js:13 ❌ No renderable UI content found, showing file list preview\nindex-CdpDbieB.js:13 💡 This might be why the preview is blank - no UI content detected\ncdn.tailwindcss.com/:1 \n            \n            \n           Failed to load resource: net::ERR_BLOCKED_BY_RESPONSE.NotSameOriginAfterDefaultedToSameOriginByCoep",
+          "pastedContents": {}
+        },
+        {
           "display": "now that we are public through vercel, i still see [Pasted text #1 +16 lines] and Content Security Policy of your site blocks the use of 'eval' in JavaScript` says no files received from agents yet(node console)",
           "pastedContents": {
             "1": {

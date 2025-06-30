@@ -316,6 +316,68 @@ export const SandboxNode: React.FC<SandboxNodeProps> = ({ id, data }) => {
                 </button>
               )}
               
+              {/* Test file generation button */}
+              <button
+                onClick={() => {
+                  console.log('🧪 FORCING TEST FILE GENERATION');
+                  
+                  // Generate test files directly
+                  const testFiles = {
+                    'src/App.tsx': {
+                      content: `import React from 'react';
+
+function App() {
+  return (
+    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+      <h1 style={{ color: '#2563eb' }}>🎉 Test App Generated!</h1>
+      <p>This is a test file generated directly by the sandbox.</p>
+      <div style={{ marginTop: '20px', padding: '15px', background: '#f0f9ff', borderRadius: '8px' }}>
+        <h2>✅ File Generation Works!</h2>
+        <p>If you can see this, the file system is working properly.</p>
+      </div>
+    </div>
+  );
+}
+
+export default App;`,
+                      path: 'src/App.tsx',
+                      lastModified: Date.now()
+                    },
+                    'src/main.tsx': {
+                      content: `import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);`,
+                      path: 'src/main.tsx', 
+                      lastModified: Date.now()
+                    }
+                  };
+                  
+                  // Update sandbox store directly
+                  import('../../stores/sandboxStore').then(({ useSandboxStore }) => {
+                    const store = useSandboxStore.getState();
+                    store.addLog('🧪 Generating test files directly...');
+                    
+                    // Add files to store
+                    Object.entries(testFiles).forEach(([path, fileData]) => {
+                      store.updateFile(path, fileData.content);
+                      store.addLog(`✅ Generated test file: ${path}`);
+                    });
+                    
+                    store.addLog(`🎉 Generated ${Object.keys(testFiles).length} test files successfully!`);
+                  });
+                }}
+                className="px-2 py-1 text-xs bg-green-500 hover:bg-green-600 text-white rounded transition-colors"
+                title="Generate test files directly to debug file system"
+              >
+                🧪 Test Files
+              </button>
+              
               {/* Debug button for testing */}
               <button
                 onClick={() => {

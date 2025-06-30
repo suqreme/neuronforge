@@ -1,20 +1,14 @@
 [
   {
-    "content": "Implement backend proxy for Anthropic API to bypass CORS",
+    "content": "Debug why no files are reaching sandbox (Array(0))",
     "status": "in_progress",
     "priority": "high",
-    "id": "backend-proxy"
+    "id": "zero-files-debug"
   },
   {
-    "content": "Add fallback template generation when AI fails",
+    "content": "Force template generation even when AI proxy works",
     "status": "pending",
-    "priority": "medium",
-    "id": "template-fallback"
-  },
-  {
-    "content": "Fix CSP eval() restrictions",
-    "status": "pending",
-    "priority": "medium",
-    "id": "csp-fix"
+    "priority": "high",
+    "id": "force-templates"
   }
 ]
