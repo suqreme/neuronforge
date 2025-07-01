@@ -66,6 +66,8 @@ class AIService {
         : '/api/anthropic';  // Production Vercel function
         
       console.log(`🔗 Using AI proxy: ${proxyUrl} (hostname: ${window.location.hostname})`);
+      console.log(`🔑 API Key available: ${!!apiKey.key}`);
+      console.log(`📝 Prompt length: ${prompt.length}`);
       
       const response = await fetch(proxyUrl, {
         method: 'POST',
@@ -85,10 +87,13 @@ class AIService {
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`❌ Proxy API error: ${response.status} - ${errorText}`);
         throw new Error(`Anthropic API error: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log(`✅ API Success! Response length: ${JSON.stringify(data).length}`);
       return data.content[0]?.text || '';
     } catch (error) {
       if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
