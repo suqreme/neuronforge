@@ -75,7 +75,7 @@ class AIService {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          apiKey: apiKey.key,
+          // apiKey: apiKey.key, // Don't send API key to browser - use server-side env var
           model: apiKey.model,
           messages: [
             {

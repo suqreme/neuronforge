@@ -22,9 +22,16 @@ export default async function handler(req, res) {
   try {
     const { messages, apiKey, model = 'claude-3-haiku-20240307' } = req.body;
 
+    // Use server-side API key if client doesn't provide one
+    const finalApiKey = apiKey || process.env.ANTHROPIC_API_KEY;
+
     // Validate required fields
-    if (!messages || !apiKey) {
-      res.status(400).json({ error: 'Missing required fields: messages and apiKey' });
+    if (!messages || !finalApiKey) {
+      res.status(400).json({ 
+        error: 'Missing required fields: messages and apiKey',
+        hasServerKey: !!process.env.ANTHROPIC_API_KEY,
+        hasClientKey: !!apiKey
+      });
       return;
     }
 
@@ -35,7 +42,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': apiKey,
+        'x-api-key': finalApiKey,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({

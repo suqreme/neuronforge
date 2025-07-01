@@ -40,6 +40,10 @@
       "allowedTools": [],
       "history": [
         {
+          "display": "on console i cannot search anything vite_ when im at vercel ev, it shows this message next to VITE_ANTHROPOC_API_KEY This key, which is prefixed with VITE_ and includes the term KEY, might expose sensitive information to the browser. Verify it is safe to share publicly.",
+          "pastedContents": {}
+        },
+        {
           "display": "7An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.[Pasted text #1 +26 lines]",
           "pastedContents": {
             "1": {
