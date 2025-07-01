@@ -24,26 +24,8 @@ interface SandboxStore extends SandboxState {
   exitStaticMode: () => void;
 }
 
-// Global WebContainer instance tracking
-let globalWebContainerInstance: any = null;
-
-// Global cleanup on page unload to prevent WebContainer instance buildup
-if (typeof window !== 'undefined') {
-  window.addEventListener('beforeunload', () => {
-    if (globalWebContainerInstance) {
-      globalWebContainerInstance.teardown().catch(console.error);
-      globalWebContainerInstance = null;
-    }
-  });
-  
-  // Also cleanup on page visibility change
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && globalWebContainerInstance) {
-      globalWebContainerInstance.teardown().catch(console.error);
-      globalWebContainerInstance = null;
-    }
-  });
-}
+// Single global WebContainer instance as per official docs
+let globalWebContainerInstance: WebContainer | null = null;
 
 export const useSandboxStore = create<SandboxStore>((set, get) => ({
   // Initial state
@@ -68,72 +50,48 @@ export const useSandboxStore = create<SandboxStore>((set, get) => ({
       return;
     }
     
-    if (container || globalWebContainerInstance) {
-      get().addLog('Container already exists, reusing existing instance');
-      if (globalWebContainerInstance && !container) {
-        set({ container: globalWebContainerInstance, isBooting: false });
-      }
+    // Following official docs: only one WebContainer instance allowed
+    if (globalWebContainerInstance) {
+      get().addLog('Using existing WebContainer instance');
+      set({ container: globalWebContainerInstance, isBooting: false });
       return;
     }
 
     set({ isBooting: true });
+    get().addLog('🚀 Booting WebContainer...');
     
     try {
-      // Check for cross-origin isolation first
-      if (typeof SharedArrayBuffer === 'undefined') {
-        throw new Error('SharedArrayBuffer not available - cross-origin isolation required');
-      }
+      // Simple boot following official docs pattern
+      const webcontainerInstance = await WebContainer.boot();
       
-      if (!crossOriginIsolated) {
-        get().addLog('⚠️ Cross-origin isolation not detected - this may cause issues');
-        get().addLog('💡 Consider using HTTPS with proper headers or enable static mode');
-      }
+      // Set global instance
+      globalWebContainerInstance = webcontainerInstance;
       
-      // Force cleanup of any existing instances to prevent "unable to create more instances" error
-      if (globalWebContainerInstance) {
-        get().addLog('Cleaning up existing global instance...');
-        try {
-          await globalWebContainerInstance.teardown();
-        } catch (cleanupError) {
-          get().addLog(`Cleanup warning: ${cleanupError}`);
-        }
-        globalWebContainerInstance = null;
-        // Wait a bit for cleanup to complete
-        await new Promise(resolve => setTimeout(resolve, 500));
-      }
+      get().addLog('✅ WebContainer booted successfully');
       
-      await get().destroyContainer();
-      
-      get().addLog('Attempting WebContainer initialization...');
-      
-      // Try to boot WebContainer with timeout
-      const bootPromise = WebContainer.boot();
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('WebContainer boot timeout after 10 seconds')), 10000);
+      // Set up server-ready event listener (following official docs)
+      webcontainerInstance.on('server-ready', (port, url) => {
+        get().addLog(`🌐 Server ready on port ${port}: ${url}`);
+        set({ previewUrl: url, isRunning: true });
       });
-      
-      const newContainer = await Promise.race([bootPromise, timeoutPromise]) as WebContainer;
-      
-      // Track globally to prevent multiple instances
-      globalWebContainerInstance = newContainer;
       
       set({ 
-        container: newContainer, 
-        isBooting: false,
-        logs: [...get().logs, '✅ WebContainer initialized successfully']
+        container: webcontainerInstance, 
+        isBooting: false
       });
 
-      // Set up basic project structure
-      await newContainer.mount({
+      // Mount initial file structure
+      await webcontainerInstance.mount({
         'package.json': {
           file: {
             contents: JSON.stringify({
-              name: 'sandbox-app',
+              name: 'webcontainer-app',
               version: '1.0.0',
               type: 'module',
               scripts: {
                 dev: 'vite --host 0.0.0.0 --port 3000',
-                build: 'vite build'
+                build: 'vite build',
+                preview: 'vite preview --host 0.0.0.0 --port 3000'
               },
               dependencies: {
                 'react': '^18.2.0',

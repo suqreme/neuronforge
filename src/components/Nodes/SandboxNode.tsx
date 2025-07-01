@@ -87,6 +87,14 @@ export const SandboxNode: React.FC<SandboxNodeProps> = ({ id, data }) => {
     };
   }, []);
 
+  // Set iframe src when previewUrl changes (following official docs pattern)
+  useEffect(() => {
+    if (previewUrl && iframeRef.current) {
+      addLog(`🔗 Setting iframe src to: ${previewUrl}`);
+      iframeRef.current.src = previewUrl;
+    }
+  }, [previewUrl]);
+
   const handleInitialize = async () => {
     try {
       addLog('🚀 Attempting to initialize WebContainer...');
