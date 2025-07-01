@@ -1,20 +1,26 @@
 [
   {
-    "content": "Test file generation using Test Files button",
-    "status": "pending",
-    "priority": "high",
-    "id": "test-button"
-  },
-  {
-    "content": "Deploy debugging version to production",
+    "content": "File system works perfectly (Test Files button success)",
     "status": "completed",
     "priority": "high",
-    "id": "deploy-debug"
+    "id": "file-system-works"
   },
   {
-    "content": "Identify root cause of zero file generation",
-    "status": "pending",
+    "content": "Fix CSP blocking JavaScript execution and external resources",
+    "status": "completed",
     "priority": "high",
-    "id": "root-cause"
+    "id": "fix-csp"
+  },
+  {
+    "content": "Allow Tailwind CDN and other external resources",
+    "status": "completed",
+    "priority": "medium",
+    "id": "allow-externals"
+  },
+  {
+    "content": "Deploy updated build without CSP restrictions",
+    "status": "completed",
+    "priority": "high",
+    "id": "deploy-updated"
   }
 ]

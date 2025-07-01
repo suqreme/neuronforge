@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import crossOriginIsolation from 'vite-plugin-cross-origin-isolation'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    // Cross-origin isolation REMOVED to fix CSP blocking JavaScript execution
-    // This allows Tailwind CDN, eval(), and normal agent→sandbox file transfer
+    crossOriginIsolation()
   ],
   server: {
     host: '0.0.0.0',
