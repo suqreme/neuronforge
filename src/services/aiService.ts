@@ -65,7 +65,7 @@ class AIService {
         ? 'http://localhost:3001/api/anthropic'  // Local development proxy
         : '/api/anthropic';  // Production Vercel function
         
-      console.log(`🔗 Using AI proxy: ${proxyUrl}`);
+      console.log(`🔗 Using AI proxy: ${proxyUrl} (hostname: ${window.location.hostname})`);
       
       const response = await fetch(proxyUrl, {
         method: 'POST',

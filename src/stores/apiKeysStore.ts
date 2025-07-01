@@ -153,17 +153,16 @@ export const useAPIKeysStore = create<APIKeysStore>()(
               }
             });
           } else {
-            // Anthropic: Test with a minimal message
-            response = await fetch('https://api.anthropic.com/v1/messages', {
+            // Anthropic: Use proxy to avoid CORS
+            const proxyUrl = '/api/anthropic';
+            response = await fetch(proxyUrl, {
               method: 'POST',
               headers: {
-                'x-api-key': key.key,
-                'Content-Type': 'application/json',
-                'anthropic-version': '2023-06-01'
+                'Content-Type': 'application/json'
               },
               body: JSON.stringify({
+                apiKey: key.key,
                 model: key.model,
-                max_tokens: 1,
                 messages: [{ role: 'user', content: 'Hi' }]
               })
             });
