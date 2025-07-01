@@ -206,12 +206,22 @@ export const useAPIKeysStore = create<APIKeysStore>()(
         const openaiKey = import.meta.env.VITE_OPENAI_API_KEY;
         const anthropicKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
 
+        console.log('🔍 Environment Variables Check:');
+        console.log(`- VITE_OPENAI_API_KEY: ${openaiKey ? 'SET' : 'NOT SET'}`);
+        console.log(`- VITE_ANTHROPIC_API_KEY: ${anthropicKey ? 'SET' : 'NOT SET'}`);
+
         if (openaiKey && !get().keys.some(k => k.provider === 'openai')) {
+          console.log('✅ Adding OpenAI key from environment');
           get().addKey('openai', 'Environment OpenAI', openaiKey, 'gpt-4');
         }
 
         if (anthropicKey && !get().keys.some(k => k.provider === 'anthropic')) {
+          console.log('✅ Adding Anthropic key from environment');
           get().addKey('anthropic', 'Environment Claude', anthropicKey, 'claude-3-sonnet-20240229');
+        }
+
+        if (!openaiKey && !anthropicKey) {
+          console.warn('⚠️ No API keys found in environment variables');
         }
       }
     }),
