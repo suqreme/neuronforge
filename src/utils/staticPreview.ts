@@ -513,7 +513,7 @@ const generateCodePreview = (files: Record<string, any>): string => {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Generated Code Preview</title>
-      <script src="https://cdn.tailwindcss.com"></script>
+      <!-- Tailwind CDN removed for cross-origin isolation compatibility -->
       <style>
         body { 
           font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
@@ -606,21 +606,69 @@ const generateNoContentPreview = (): string => {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Waiting for Content</title>
-      <script src="https://cdn.tailwindcss.com"></script>
+      <!-- Tailwind CDN removed for cross-origin isolation compatibility -->
+      <style>
+        body {
+          margin: 0;
+          background-color: #f3f4f6;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .container {
+          text-align: center;
+          padding: 2rem;
+          background-color: white;
+          border-radius: 0.5rem;
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+          max-width: 24rem;
+          margin: 0 auto;
+        }
+        .title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #1f2937;
+          margin-bottom: 0.5rem;
+        }
+        .description {
+          color: #4b5563;
+          margin-bottom: 1rem;
+        }
+        .dots {
+          display: flex;
+          justify-content: center;
+          gap: 0.25rem;
+        }
+        .dot {
+          width: 0.5rem;
+          height: 0.5rem;
+          background-color: #3b82f6;
+          border-radius: 50%;
+          animation: pulse 2s infinite;
+        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+      </style>
     </head>
-    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-      <div class="text-center p-8 bg-white rounded-lg shadow-lg max-w-md mx-auto">
-        <div class="text-6xl mb-4">🧠</div>
-        <h2 class="text-xl font-semibold text-gray-800 mb-2">
+    <body>
+      <div class="container">
+        <div style="font-size: 3.75rem; margin-bottom: 1rem;">🧠</div>
+        <h2 class="title">
           Waiting for AI Agents
         </h2>
-        <p class="text-gray-600 mb-4">
+        <p class="description">
           Generated files will appear here as agents create them
         </p>
-        <div class="flex justify-center space-x-1">
-          <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-          <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-          <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+        <div class="dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
         </div>
       </div>
     </body>
