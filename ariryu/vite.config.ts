@@ -6,6 +6,10 @@ export default defineConfig(({ mode }) => {
   
   return {
     plugins: [react()],
+    server: {
+      port: 3000,
+      host: true, // Listen on all addresses
+    },
     define: {
       'import.meta.env.VITE_OPENAI_API_KEY': JSON.stringify(env.VITE_OPENAI_API_KEY),
       'import.meta.env.VITE_AI_PROVIDER': JSON.stringify(env.VITE_AI_PROVIDER),

@@ -5,6 +5,7 @@ import { useLogStore } from '../../stores/logStore';
 import { usePreview } from '../../stores/previewStore';
 import { generateFallbackApp } from '../../utils/fallbackGenerator';
 import { previewLogger } from '../../utils/previewLogger';
+import { usePreviewServer } from '../../utils/previewServer';
 import PreviewIframe from './PreviewIframe';
 
 const LivePreview: React.FC = () => {
@@ -12,6 +13,7 @@ const LivePreview: React.FC = () => {
   const { openTabs } = useEditorStore();
   const addLog = useLogStore((state) => state.addLog);
   const preview = usePreview();
+  const previewServer = usePreviewServer();
   const [previewState, setPreviewState] = useState<'loading' | 'ready' | 'error' | 'fallback' | 'no_server'>('loading');
   const [lastError, setLastError] = useState<string | null>(null);
   const [showUrlInput, setShowUrlInput] = useState<boolean>(false);
@@ -208,6 +210,53 @@ const LivePreview: React.FC = () => {
     }
   };
 
+  const handleStartGeneratedPreview = async () => {
+    setPreviewState('loading');
+    
+    addLog({
+      level: 'info',
+      source: 'Preview',
+      message: '🚀 Starting preview of generated app...',
+      timestamp: Date.now(),
+      id: `preview-start-generated-${Date.now()}`
+    });
+
+    try {
+      const previewUrl = await previewServer.startGeneratedAppPreview();
+      
+      if (previewUrl) {
+        setPreviewState('ready');
+        addLog({
+          level: 'success',
+          source: 'Preview',
+          message: '✅ Generated app preview started successfully',
+          timestamp: Date.now(),
+          id: `preview-generated-success-${Date.now()}`
+        });
+      } else {
+        setPreviewState('fallback');
+        setLastError('No essential files found. Generate an app first.');
+        addLog({
+          level: 'warn',
+          source: 'Preview',
+          message: '⚠️ Cannot start preview - missing essential files',
+          timestamp: Date.now(),
+          id: `preview-generated-missing-${Date.now()}`
+        });
+      }
+    } catch (error) {
+      setPreviewState('error');
+      setLastError(`Failed to start preview: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      addLog({
+        level: 'error',
+        source: 'Preview',
+        message: `❌ Preview startup failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        timestamp: Date.now(),
+        id: `preview-generated-error-${Date.now()}`
+      });
+    }
+  };
+
   const getStatusColor = () => {
     switch (previewState) {
       case 'ready': return 'bg-green-500';
@@ -277,12 +326,21 @@ const LivePreview: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-3">
+                  <button 
+                    onClick={handleStartGeneratedPreview}
+                    className="px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors block mx-auto"
+                  >
+                    🚀 Preview Generated App
+                  </button>
+                  
+                  <div className="text-xs text-orange-500 text-center">or</div>
+                  
                   <button 
                     onClick={handleAutoDetect}
                     className="px-4 py-2 bg-orange-600 text-white text-sm rounded hover:bg-orange-700 transition-colors block mx-auto"
                   >
-                    🔍 Auto-Detect Server
+                    🔍 Auto-Detect External Server
                   </button>
                   <div className="flex space-x-2 justify-center">
                     <button 
@@ -342,6 +400,12 @@ const LivePreview: React.FC = () => {
                 Files: {integrity.fileCount} | App: {integrity.hasApp ? '✅' : '❌'} | Main: {integrity.hasMain ? '✅' : '❌'}
               </div>
               <div className="space-y-2">
+                <button 
+                  onClick={handleStartGeneratedPreview}
+                  className="px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors block mx-auto"
+                >
+                  🚀 Try Preview Anyway
+                </button>
                 <button 
                   onClick={handleGenerateFallbackApp}
                   className="px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700 transition-colors block mx-auto"
