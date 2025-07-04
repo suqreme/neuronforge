@@ -9,6 +9,7 @@ import { runSummarizerAgent } from '../../agents/SummarizerAgent';
 import { runCriticAgent } from '../../agents/CriticAgent';
 import { runClaudeReflection } from '../../agents/ClaudeReflectionAgent';
 import { exportProjectAsZip, ExportPresets } from '../../utils/exportProjectAsZip';
+import { usePreview } from '../../stores/previewStore';
 
 export function ControlBar() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -17,6 +18,7 @@ export function ControlBar() {
   const [selectedProvider, setSelectedProviderState] = useState<LLMProvider>(getCurrentProvider());
   const [exportDropdownOpen, setExportDropdownOpen] = useState<boolean>(false);
   const exportDropdownRef = useRef<HTMLDivElement>(null);
+  const preview = usePreview();
   const availableProviders = getAvailableProviders();
 
   useEffect(() => {
@@ -230,6 +232,36 @@ export function ControlBar() {
     }
   };
 
+  const handlePreviewClick = async () => {
+    if (!preview.getPreviewUrl()) {
+      // Try to auto-detect if no URL is set
+      addToast({
+        message: '🔍 Auto-detecting development server...',
+        type: 'info'
+      });
+
+      const detectedUrl = await preview.autoDetectLocal();
+      
+      if (detectedUrl) {
+        addToast({
+          message: `🌐 Connected to ${detectedUrl}`,
+          type: 'success'
+        });
+      } else {
+        addToast({
+          message: 'No development server found. Start your dev server and try again.',
+          type: 'warning'
+        });
+      }
+    } else {
+      // Show preview (will be handled by WorkbenchLayout tab switching)
+      addToast({
+        message: `🌐 Preview available at: ${preview.getPreviewUrl()}`,
+        type: 'info'
+      });
+    }
+  };
+
   return (
     <div className="flex items-center gap-3 p-3 bg-gray-900 border-b border-gray-700">
       <div className="flex items-center gap-2">
@@ -310,14 +342,28 @@ export function ControlBar() {
           )}
         </div>
 
-        {/* Quick Preview */}
+        {/* Live Preview */}
+        <button
+          onClick={handlePreviewClick}
+          className={`flex items-center gap-2 px-3 py-1.5 text-white text-sm rounded-md transition-colors ${
+            preview.getPreviewUrl() && preview.config.connectionStatus === 'connected'
+              ? 'bg-green-600 hover:bg-green-700'
+              : 'bg-orange-600 hover:bg-orange-700'
+          }`}
+          title={preview.getPreviewUrl() ? `Connected to ${preview.getPreviewUrl()}` : "Connect to development server"}
+        >
+          <span className="text-base">🌐</span>
+          {preview.getPreviewUrl() ? 'Preview' : 'Connect'}
+        </button>
+
+        {/* Quick Preview (Fallback App) */}
         <button
           onClick={handleQuickPreview}
-          className="flex items-center gap-2 px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-sm rounded-md transition-colors"
+          className="flex items-center gap-2 px-3 py-1.5 bg-gray-600 hover:bg-gray-700 text-white text-sm rounded-md transition-colors"
           title="Generate quick preview app"
         >
           <span className="text-base">🪟</span>
-          Preview
+          Quick App
         </button>
 
         {/* Summarizer Agent */}

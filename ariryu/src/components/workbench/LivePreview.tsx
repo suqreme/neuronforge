@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useProjectStore } from '../../stores/projectStore';
 import { useEditorStore } from '../../stores/editorStore';
 import { useLogStore } from '../../stores/logStore';
+import { usePreview } from '../../stores/previewStore';
 import { generateFallbackApp } from '../../utils/fallbackGenerator';
 import { previewLogger } from '../../utils/previewLogger';
+import PreviewIframe from './PreviewIframe';
 
 const LivePreview: React.FC = () => {
   const { project } = useProjectStore();
   const { openTabs } = useEditorStore();
   const addLog = useLogStore((state) => state.addLog);
-  const [previewState, setPreviewState] = useState<'loading' | 'ready' | 'error' | 'fallback'>('loading');
-  const [previewUrl, setPreviewUrl] = useState<string>('about:blank');
+  const preview = usePreview();
+  const [previewState, setPreviewState] = useState<'loading' | 'ready' | 'error' | 'fallback' | 'no_server'>('loading');
   const [lastError, setLastError] = useState<string | null>(null);
+  const [showUrlInput, setShowUrlInput] = useState<boolean>(false);
+  const [tempUrl, setTempUrl] = useState<string>('');
 
   // Check if we have essential files for a React app
   const checkAppIntegrity = () => {
@@ -31,12 +35,21 @@ const LivePreview: React.FC = () => {
 
   const integrity = checkAppIntegrity();
 
-  // Monitor file changes and project status
+  // Monitor file changes, project status, and preview URL
   useEffect(() => {
     const oldState = previewState;
     let newState = previewState;
     
-    if (project?.status === 'running' && integrity.isComplete) {
+    // Check if we have a preview URL configured
+    if (!preview.getPreviewUrl()) {
+      newState = 'no_server';
+      setPreviewState('no_server');
+      setLastError('No development server configured');
+    } else if (preview.config.connectionStatus === 'error') {
+      newState = 'error';
+      setPreviewState('error');
+      setLastError('Failed to connect to development server');
+    } else if (preview.config.connectionStatus === 'connected' && preview.isPreviewAvailable()) {
       newState = 'ready';
       setPreviewState('ready');
       setLastError(null);
@@ -75,7 +88,7 @@ const LivePreview: React.FC = () => {
       previewLogger.logPreviewStateChange(oldState, newState, 
         project?.status ? `project status: ${project.status}` : undefined);
     }
-  }, [project?.status, integrity.isComplete, integrity.hasValidFiles, integrity.hasApp, integrity.hasMain, addLog, previewState]);
+  }, [project?.status, integrity.isComplete, integrity.hasValidFiles, integrity.hasApp, integrity.hasMain, addLog, previewState, preview.config.connectionStatus, preview.getPreviewUrl]);
 
   const handleRefresh = () => {
     setPreviewState('loading');
@@ -128,20 +141,71 @@ const LivePreview: React.FC = () => {
     }
   };
 
+  const handleConnectUrl = () => {
+    if (tempUrl.trim()) {
+      preview.connectToUrl(tempUrl.trim());
+      setShowUrlInput(false);
+      setTempUrl('');
+      preview.setConnectionStatus('connecting');
+      
+      addLog({
+        level: 'info',
+        source: 'Preview',
+        message: `🌐 Connecting to: ${tempUrl.trim()}`,
+        timestamp: Date.now(),
+        id: `preview-connect-${Date.now()}`
+      });
+    }
+  };
+
+  const handleAutoDetect = async () => {
+    setPreviewState('loading');
+    
+    addLog({
+      level: 'info',
+      source: 'Preview',
+      message: '🔍 Auto-detecting local development server...',
+      timestamp: Date.now(),
+      id: `preview-autodetect-${Date.now()}`
+    });
+
+    const detectedUrl = await preview.autoDetectLocal();
+    
+    if (detectedUrl) {
+      addLog({
+        level: 'success',
+        source: 'Preview',
+        message: `✅ Detected server at: ${detectedUrl}`,
+        timestamp: Date.now(),
+        id: `preview-detected-${Date.now()}`
+      });
+    } else {
+      addLog({
+        level: 'warn',
+        source: 'Preview',
+        message: '⚠️ No local development servers detected',
+        timestamp: Date.now(),
+        id: `preview-nodetect-${Date.now()}`
+      });
+    }
+  };
+
   const getStatusColor = () => {
     switch (previewState) {
       case 'ready': return 'bg-green-500';
       case 'error': return 'bg-red-500';
       case 'fallback': return 'bg-yellow-500';
+      case 'no_server': return 'bg-orange-500';
       default: return 'bg-gray-500';
     }
   };
 
   const getStatusText = () => {
     switch (previewState) {
-      case 'ready': return 'Ready';
+      case 'ready': return 'Connected';
       case 'error': return 'Error';
       case 'fallback': return 'Fallback';
+      case 'no_server': return 'No Server';
       case 'loading': return 'Loading';
       default: return 'Unknown';
     }
@@ -151,15 +215,81 @@ const LivePreview: React.FC = () => {
     switch (previewState) {
       case 'ready':
         return (
-          <iframe 
-            src={previewUrl}
-            className="w-full h-full border-0"
-            title="Live Preview"
-            onError={() => {
-              setPreviewState('error');
-              setLastError('Preview iframe failed to load');
-            }}
+          <PreviewIframe 
+            sandboxUrl={preview.getPreviewUrl()}
+            autoRefresh={preview.config.autoRefresh}
+            refreshInterval={preview.config.refreshInterval}
+            className="w-full h-full"
           />
+        );
+
+      case 'no_server':
+        return (
+          <div className="h-full flex items-center justify-center bg-gradient-to-br from-orange-50 to-orange-100">
+            <div className="text-center max-w-md">
+              <div className="text-4xl text-orange-500 mb-4">🌐</div>
+              <h3 className="text-lg font-medium text-orange-700 mb-2">No Development Server</h3>
+              <p className="text-sm text-orange-600 mb-4">
+                Connect to a running development server to see your live preview
+              </p>
+              
+              {showUrlInput ? (
+                <div className="space-y-3">
+                  <div className="flex space-x-2">
+                    <input
+                      type="url"
+                      value={tempUrl}
+                      onChange={(e) => setTempUrl(e.target.value)}
+                      placeholder="http://localhost:3000"
+                      className="flex-1 px-3 py-2 border border-orange-300 rounded text-sm"
+                      onKeyPress={(e) => e.key === 'Enter' && handleConnectUrl()}
+                    />
+                    <button
+                      onClick={handleConnectUrl}
+                      className="px-3 py-2 bg-orange-600 text-white text-sm rounded hover:bg-orange-700 transition-colors"
+                    >
+                      Connect
+                    </button>
+                  </div>
+                  <button
+                    onClick={() => setShowUrlInput(false)}
+                    className="text-xs text-orange-600 hover:text-orange-800"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <button 
+                    onClick={handleAutoDetect}
+                    className="px-4 py-2 bg-orange-600 text-white text-sm rounded hover:bg-orange-700 transition-colors block mx-auto"
+                  >
+                    🔍 Auto-Detect Server
+                  </button>
+                  <div className="flex space-x-2 justify-center">
+                    <button 
+                      onClick={() => preview.connectToLocalhost(3000)}
+                      className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+                    >
+                      localhost:3000
+                    </button>
+                    <button 
+                      onClick={() => preview.connectToLocalhost(5173)}
+                      className="px-3 py-1 bg-purple-600 text-white text-xs rounded hover:bg-purple-700 transition-colors"
+                    >
+                      localhost:5173
+                    </button>
+                    <button 
+                      onClick={() => setShowUrlInput(true)}
+                      className="px-3 py-1 bg-gray-600 text-white text-xs rounded hover:bg-gray-700 transition-colors"
+                    >
+                      Custom URL
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         );
 
       case 'error':
@@ -233,15 +363,31 @@ const LivePreview: React.FC = () => {
     <div className="h-full flex flex-col bg-gray-900">
       {/* Header */}
       <div className="h-8 bg-gray-800 border-b border-gray-700 flex items-center px-3 justify-between">
-        <span className="text-sm text-gray-300">Live Preview</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-sm text-gray-300">Live Preview</span>
+          {preview.getPreviewUrl() && (
+            <span className="text-xs text-gray-500 truncate max-w-32">
+              {preview.getPreviewUrl()}
+            </span>
+          )}
+        </div>
         <div className="flex items-center space-x-2">
           <span className="text-xs text-gray-400">{getStatusText()}</span>
-          <button 
-            onClick={handleRefresh}
+          {preview.getPreviewUrl() && (
+            <button 
+              onClick={handleRefresh}
+              className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700 transition-colors"
+              title="Refresh preview"
+            >
+              🔄
+            </button>
+          )}
+          <button
+            onClick={() => setShowUrlInput(!showUrlInput)}
             className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700 transition-colors"
-            title="Refresh preview"
+            title="Configure preview URL"
           >
-            🔄
+            ⚙️
           </button>
           <div 
             className={`w-2 h-2 rounded-full ${getStatusColor()}`}
