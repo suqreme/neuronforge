@@ -24,16 +24,36 @@ export const PreviewIframe: React.FC<PreviewIframeProps> = ({
 
   useEffect(() => {
     if (sandboxUrl) {
-      const urlWithCacheBuster = `${sandboxUrl}?t=${Date.now()}`;
-      setCurrentUrl(urlWithCacheBuster);
-      setIsLoading(true);
-      setHasError(false);
-      
-      useLogStore.getState().addLog({
-        level: 'info',
-        source: 'Live Preview',
-        message: `🌐 Loading preview from: ${sandboxUrl}`
-      });
+      // Validate URL before loading
+      try {
+        const url = new URL(sandboxUrl);
+        if (!['http:', 'https:'].includes(url.protocol)) {
+          setHasError(true);
+          setLastError('Invalid URL protocol. Only http and https are supported.');
+          return;
+        }
+        
+        const urlWithCacheBuster = `${sandboxUrl}?t=${Date.now()}`;
+        setCurrentUrl(urlWithCacheBuster);
+        setIsLoading(true);
+        setHasError(false);
+        
+        useLogStore.getState().addLog({
+          level: 'info',
+          source: 'Live Preview',
+          message: `🌐 Loading preview from: ${sandboxUrl}`
+        });
+      } catch (error) {
+        setHasError(true);
+        setLastError('Invalid URL format');
+        setIsLoading(false);
+        
+        useLogStore.getState().addLog({
+          level: 'error',
+          source: 'Live Preview',
+          message: `❌ Invalid preview URL: ${sandboxUrl}`
+        });
+      }
     }
   }, [sandboxUrl]);
 
@@ -212,10 +232,11 @@ export const PreviewIframe: React.FC<PreviewIframeProps> = ({
         src={currentUrl}
         onLoad={handleIframeLoad}
         onError={handleIframeError}
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+        sandbox="allow-scripts allow-forms allow-popups allow-modals allow-downloads allow-same-origin"
         className="w-full h-full border-none"
         title="Live App Preview"
         loading="lazy"
+        referrerPolicy="strict-origin-when-cross-origin"
       />
     </div>
   );

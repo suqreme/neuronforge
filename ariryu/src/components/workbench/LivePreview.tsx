@@ -141,12 +141,9 @@ const LivePreview: React.FC = () => {
     }
   };
 
-  const handleConnectUrl = () => {
+  const handleConnectUrl = async () => {
     if (tempUrl.trim()) {
-      preview.connectToUrl(tempUrl.trim());
       setShowUrlInput(false);
-      setTempUrl('');
-      preview.setConnectionStatus('connecting');
       
       addLog({
         level: 'info',
@@ -155,6 +152,27 @@ const LivePreview: React.FC = () => {
         timestamp: Date.now(),
         id: `preview-connect-${Date.now()}`
       });
+
+      try {
+        await preview.connectToUrl(tempUrl.trim());
+        setTempUrl('');
+        
+        addLog({
+          level: 'success',
+          source: 'Preview',
+          message: `✅ Connected to: ${tempUrl.trim()}`,
+          timestamp: Date.now(),
+          id: `preview-connected-${Date.now()}`
+        });
+      } catch (error) {
+        addLog({
+          level: 'error',
+          source: 'Preview',
+          message: `❌ Failed to connect to: ${tempUrl.trim()}`,
+          timestamp: Date.now(),
+          id: `preview-failed-${Date.now()}`
+        });
+      }
     }
   };
 

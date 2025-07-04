@@ -240,17 +240,24 @@ export function ControlBar() {
         type: 'info'
       });
 
-      const detectedUrl = await preview.autoDetectLocal();
-      
-      if (detectedUrl) {
+      try {
+        const detectedUrl = await preview.autoDetectLocal();
+        
+        if (detectedUrl) {
+          addToast({
+            message: `🌐 Connected to ${detectedUrl}`,
+            type: 'success'
+          });
+        } else {
+          addToast({
+            message: 'No development server found. Start your dev server and try again.',
+            type: 'warning'
+          });
+        }
+      } catch (error) {
         addToast({
-          message: `🌐 Connected to ${detectedUrl}`,
-          type: 'success'
-        });
-      } else {
-        addToast({
-          message: 'No development server found. Start your dev server and try again.',
-          type: 'warning'
+          message: 'Failed to detect development server',
+          type: 'error'
         });
       }
     } else {

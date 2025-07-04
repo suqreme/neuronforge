@@ -153,14 +153,32 @@ export const PreviewUrlPresets = {
   
   // Auto-detect common development servers
   detectLocal: async (): Promise<string | null> => {
-    const commonPorts = [3000, 3001, 5173, 8080, 4000];
+    const commonPorts = [3000, 3001, 5173, 8080, 4000, 4200, 8000];
     
     for (const port of commonPorts) {
       try {
         const url = `http://localhost:${port}`;
-        const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+        
+        // Use a more reliable detection method
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
+        
+        const response = await fetch(url, { 
+          method: 'HEAD',
+          mode: 'no-cors',
+          signal: controller.signal,
+          cache: 'no-cache'
+        });
+        
+        clearTimeout(timeoutId);
+        
+        // If we get here without an error, the server is likely running
         return url;
-      } catch {
+      } catch (error) {
+        // Only log if it's not a typical "connection refused" error
+        if (error instanceof Error && !error.message.includes('Failed to fetch')) {
+          console.debug(`Port ${port} check failed:`, error.message);
+        }
         // Continue to next port
       }
     }
@@ -185,13 +203,41 @@ export const usePreview = () => {
       store.setSandboxUrl(PreviewUrlPresets.modal(appId));
     },
     
-    connectToUrl: (url: string) => {
+    connectToUrl: async (url: string) => {
       // Validate URL format
       try {
-        new URL(url);
+        const validUrl = new URL(url);
+        
+        // Additional validation for common issues
+        if (!['http:', 'https:'].includes(validUrl.protocol)) {
+          throw new Error('URL must use http or https protocol');
+        }
+        
+        store.setConnectionStatus('connecting');
         store.setSandboxUrl(url);
-      } catch {
-        console.error('Invalid URL provided to preview store:', url);
+        
+        // Test the connection
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+          
+          await fetch(url, { 
+            method: 'HEAD',
+            mode: 'no-cors',
+            signal: controller.signal,
+            cache: 'no-cache'
+          });
+          
+          clearTimeout(timeoutId);
+          store.setConnectionStatus('connected');
+        } catch (fetchError) {
+          console.warn('Preview URL connection test failed:', fetchError);
+          store.setConnectionStatus('error');
+        }
+        
+      } catch (error) {
+        console.error('Invalid URL provided to preview store:', url, error);
+        store.setConnectionStatus('error');
       }
     },
     
