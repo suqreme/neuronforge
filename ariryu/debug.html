@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <div id="debug">Testing...</div>
+    <script>
+        console.log('Testing script load...');
+        fetch('http://localhost:5173/')
+        .then(response => response.text())
+        .then(html => {
+            console.log('Response length:', html.length);
+            console.log('Contains React?', html.includes('React'));
+        })
+        .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>

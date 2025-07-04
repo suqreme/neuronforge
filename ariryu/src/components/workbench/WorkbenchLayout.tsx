@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import MainPanel from './MainPanel';
 import LogViewer from './LogViewer';
 import LivePreview from './LivePreview';
@@ -24,6 +24,7 @@ import { AgentFeedbackPanel } from './AgentFeedbackPanel';
 import { SelfCritiquePanel } from './SelfCritiquePanel';
 import { TokenBudgetPanel } from './TokenBudgetPanel';
 import { previewLogger } from '../../utils/previewLogger';
+import { triggerClaudeTestGeneration, TestGenerationPresets, getTestCoverageSummary } from '../../utils/triggerClaudeTestGen';
 import { useAgentMemoryStore } from '../../stores/agentMemoryStore';
 import { useDiffStore } from '../../stores/diffStore';
 import { useMemoryStore } from '../../stores/memoryStore';
@@ -36,6 +37,9 @@ const WorkbenchLayout: React.FC = () => {
   const [rightPanelWidth, setRightPanelWidth] = useState<number>(Math.floor(window.innerWidth * 0.5)); // Start with 50% of screen width
   const [isPanelCollapsed, setIsPanelCollapsed] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isGeneratingTests, setIsGeneratingTests] = useState<boolean>(false);
+  const [testGenDropdownOpen, setTestGenDropdownOpen] = useState<boolean>(false);
+  const testGenDropdownRef = useRef<HTMLDivElement>(null);
   const { getAllAgents } = useAgentMemoryStore();
   const { getPendingDiffsCount } = useDiffStore();
   const { getMemoryCount } = useMemoryStore();
@@ -74,6 +78,54 @@ const WorkbenchLayout: React.FC = () => {
     setIsPanelCollapsed(newCollapsed);
     previewLogger.logPanelToggle(newCollapsed);
   };
+
+  // Test generation handlers
+  const handleTestGeneration = async (preset?: keyof typeof TestGenerationPresets) => {
+    if (isGeneratingTests) return;
+
+    setIsGeneratingTests(true);
+    setTestGenDropdownOpen(false);
+
+    try {
+      let result;
+      if (preset && TestGenerationPresets[preset]) {
+        result = await TestGenerationPresets[preset]();
+      } else {
+        result = await triggerClaudeTestGeneration();
+      }
+
+      if (result.success) {
+        // Switch to logs tab to show the results
+        setActiveTab('logs');
+      }
+    } catch (error) {
+      console.error('Test generation failed:', error);
+    } finally {
+      setIsGeneratingTests(false);
+    }
+  };
+
+  const getTestCoverage = () => {
+    try {
+      return getTestCoverageSummary();
+    } catch (error) {
+      return { hasTests: false, testFileCount: 0, testedComponents: [], missingTests: [] };
+    }
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (testGenDropdownRef.current && !testGenDropdownRef.current.contains(event.target as Node)) {
+        setTestGenDropdownOpen(false);
+      }
+    };
+
+    if (testGenDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [testGenDropdownOpen]);
 
   return (
     <div className="workbench-root h-screen w-full bg-gray-900 text-white flex flex-col">
@@ -318,6 +370,87 @@ const WorkbenchLayout: React.FC = () => {
             
             {/* Panel Controls */}
             <div className="flex items-center px-2 space-x-1">
+              {/* Test Generation Button */}
+              <div className="relative" ref={testGenDropdownRef}>
+                <button
+                  onClick={() => setTestGenDropdownOpen(!testGenDropdownOpen)}
+                  disabled={isGeneratingTests}
+                  className={`px-3 py-1 text-sm font-medium rounded transition-colors ${
+                    isGeneratingTests 
+                      ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  }`}
+                  title="Generate test files with Claude"
+                >
+                  {isGeneratingTests ? (
+                    <>
+                      <span className="animate-spin mr-1">⚙️</span>
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      🧪 Generate Tests
+                    </>
+                  )}
+                </button>
+
+                {/* Test Generation Dropdown */}
+                {testGenDropdownOpen && !isGeneratingTests && (
+                  <div className="absolute right-0 top-full mt-1 w-48 bg-gray-800 border border-gray-600 rounded shadow-lg z-50">
+                    <div className="p-2 border-b border-gray-600">
+                      <div className="text-xs text-gray-400">
+                        Current: {(() => {
+                          const coverage = getTestCoverage();
+                          return `${coverage.testFileCount} test files`;
+                        })()}
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={() => handleTestGeneration()}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-700 transition-colors"
+                    >
+                      🎯 Comprehensive Tests
+                    </button>
+                    
+                    <button
+                      onClick={() => handleTestGeneration('components')}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-700 transition-colors"
+                    >
+                      ⚛️ Components Only
+                    </button>
+                    
+                    <button
+                      onClick={() => handleTestGeneration('utilities')}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-700 transition-colors"
+                    >
+                      🔧 Utilities Only
+                    </button>
+                    
+                    <button
+                      onClick={() => handleTestGeneration('routes')}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-700 transition-colors"
+                    >
+                      🛣️ API Routes Only
+                    </button>
+                    
+                    <button
+                      onClick={() => handleTestGeneration('stores')}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-700 transition-colors"
+                    >
+                      🗄️ State Stores Only
+                    </button>
+                    
+                    <button
+                      onClick={() => handleTestGeneration('critical')}
+                      className="w-full px-3 py-2 text-left text-sm hover:bg-gray-700 transition-colors border-t border-gray-600"
+                    >
+                      🚨 Critical Tests Only
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <button
                 onClick={togglePanelCollapse}
                 className="p-1 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"

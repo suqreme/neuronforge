@@ -1,0 +1,265 @@
+🛠️ Phase 0
+Modal Sandbox Recovery & CSP Fix
+
+Moved away from WebContainer
+
+Switched to Modal sandbox with full iframe isolation
+
+Bootstrapped Vite + Bun dev server environment
+
+Solved Cross-Origin and CSP issues permanently
+
+🧱 Phase 1
+Workbench Shell Layout
+
+Left: Prompt + agent chat
+
+Right: Monaco editor + log stream
+
+Basic tab editor + real-time layout switch
+
+🧠 Phase 2
+Manager Agent Boot
+
+Spawn Manager agent
+
+Initializes first project
+
+Shows startup output in chat/logs
+
+👥 Phase 3
+UI and Backend Agent Spawning
+
+Manager spawns specialized agents
+
+Each agent has its role, memory, and behavior
+
+🔄 Phase 4
+Agent Coordination: Message Bus
+
+Message passing system between agents
+
+Agents see context from shared memory
+
+🚀 Phase 5
+Live Dev Server Integration
+
+Real-time Bun + Vite dev server runs in sandbox
+
+Stream logs to terminal panel
+
+Auto reload when files change
+
+🧠 Phase 6
+Prompt → Plan Engine (Claude Task Breakdown)
+
+Breaks prompts into tasks
+
+Assigns each task to appropriate agent
+
+Plan preview rendered in chat
+
+✍️ Phase 7
+Code Streaming + File Writing Loop
+
+Agents stream code to files in real time
+
+Monaco editor updates as agent types
+
+🗂️ Phase 8
+File Tree Integration
+
+Dynamic file explorer
+
+Highlight which files are being edited
+
+Open in new tab on click
+
+🔁 Phase 9
+Live Reload and Hot Update on Save
+
+File changes trigger hot updates
+
+Reflect immediately in preview/log stream
+
+🧩 Phase 10
+Multi-Agent Awareness of File System
+
+Agents can query current files
+
+Reference existing code intelligently
+
+🧪 Phase 11
+API Route Testing Panel (Experimental)
+
+Agent creates API routes
+
+UI to test them live inside sandbox
+
+Logs results
+
+📋 Phase 12
+Real-Time Log Parsing and Highlighting
+
+Highlight server errors
+
+Group logs by type (info, warn, error)
+
+🧠 Phase 13
+Claude Memory Embedding (Vector Plan)
+
+Claude stores completed task plans in memory
+
+Used for retrieval / improvement later
+
+🪞 Phase 14
+Claude Self-Review Engine (Critic Mode)
+
+Reviews recent file/code changes
+
+Scores quality, flags issues
+
+Can auto-regenerate low-quality blocks
+
+🧩 Phase 15
+Multi-File Parsing + Notifications
+
+Claude reads and updates multiple files
+
+Visual indicators when new files are touched
+
+💬 Phase 16
+User Feedback Injection + Correction Plan
+
+User feedback goes into shared memory
+
+Claude triggers update or patch task based on it
+
+🧠 Phase 17
+Context-Aware Claude Token Management
+
+Prioritize important memory chunks
+
+Limit over-tokenization and stale context
+
+🔁 Phase 18
+Auto-Summary Throttle and Token Protection
+
+Prevent runaway usage
+
+Turn off critic/memory writing if limits hit
+
+🗃️ Phase 19
+Task History View + Progress Tracker
+
+Claude-generated task stack
+
+Progress bar or checklist visible
+
+🧪 Phase 20
+Claude Critic Auto-Correction Trigger (Safe Mode)
+
+Claude can regenerate parts of code if it flags as low quality
+
+Only executes if within token budget
+
+🔁 Phase 21
+Manual Server Restart / Kill
+
+UI button kills and restarts dev server
+
+Updates live log stream
+
+🧑‍💻 Phase 22
+Multi-Tab Editor Controls
+
+Add/remove editor tabs
+
+Highlight active agents per file
+
+🧷 Phase 23
+Claude-Aware File Path Indexing
+
+Claude sees actual folder/file structure
+
+Uses path autocompletion in responses
+
+📑 Phase 24
+Log-Aware Claude Comments
+
+Claude reads terminal output
+
+Suggests code fixes based on stack trace
+
+🧠 Phase 25
+Internal Plan Reflection Memory
+
+Claude remembers its plans
+
+Adjusts future output accordingly
+
+🧠 Phase 26
+Improved Claude Task Critique Scoring
+
+Multiple scoring types: correctness, efficiency, clarity
+
+Used for prompting regeneration
+
+🧪 Phase 27
+Token Usage Display + Kill Switches
+
+Token usage bar
+
+Stop critic/memory if budget exceeded
+
+⚙️ Phase 28
+API Route Synchronization Panel
+
+Show all API endpoints created
+
+Test + log each one
+
+Auto-link route to agent that created it
+
+🔁 Phase 29
+Autonomous Claude Self-Fix Loop
+
+Detects poor quality
+
+Triggers new plan to self-correct
+
+Updates task stack
+
+🧠 Phase 30
+Memory Embedding of Plans and Outcomes
+
+Store vector representation of task + output
+
+Used in future improvement attempts
+
+🧠 Phase 31
+Smart Claude Regeneration Ranking
+
+Decides whether to update plan, fix part, or leave alone
+
+Based on file diffs, quality score, and logs
+
+✅ Phase 32
+Finalized Critic Engine with Context Prioritization
+
+✅ Phase 33
+User Feedback + Priority Fix Handling
+
+✅ Phase 34
+Token-Safe Context Builder
+
+✅ Phase 35
+Multi-File Notification + Visual Updates
+
+✅ Phase 36
+Token Overuse Guardrails + Safety Throttling
+
+Stops Claude from triggering critic or auto-summary when unsafe
+
+Protects dev server from runaway tasks
+

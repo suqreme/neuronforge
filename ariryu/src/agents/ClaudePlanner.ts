@@ -11,7 +11,7 @@ import { parseAndApplyClaudeFiles, previewParsedFiles } from '../utils/parseClau
 import { useTokenBudgetStore } from '../stores/tokenBudgetStore';
 
 export interface ClaudeAction {
-  type: 'improve_file' | 'create_file' | 'delete_file' | 'ask_user' | 'debug_issue' | 'add_feature' | 'spawn_agent' | 'coordinate_agents' | 'analyze_dependencies';
+  type: 'improve_file' | 'create_file' | 'delete_file' | 'ask_user' | 'debug_issue' | 'add_feature' | 'spawn_agent' | 'coordinate_agents' | 'analyze_dependencies' | 'generate_tests';
   target?: string;
   question?: string;
   reason: string;
@@ -130,6 +130,18 @@ export async function runClaudePlanner(): Promise<ClaudePlan> {
 
 ${contextResult.context}
 
+AVAILABLE ACTION TYPES:
+- improve_file: Enhance existing files
+- create_file: Create new files  
+- delete_file: Remove unnecessary files
+- ask_user: Ask clarifying questions
+- debug_issue: Debug specific problems
+- add_feature: Add new functionality
+- generate_tests: Create comprehensive test files
+- spawn_agent: Create specialized agents
+- coordinate_agents: Manage agent collaboration
+- analyze_dependencies: Review project dependencies
+
 ADDITIONAL PLANNING GUIDELINES:
 - PRIORITIZE user feedback - human guidance is most important
 - Address specific issues raised in negative user feedback
@@ -139,6 +151,7 @@ ADDITIONAL PLANNING GUIDELINES:
 - Identify potential bugs or issues to fix
 - Suggest user experience enhancements
 - Recommend architecture improvements
+- Suggest test generation when test coverage is lacking
 
 IMPORTANT: 
 1. USER FEEDBACK takes highest priority - human guidance overrides AI preferences
@@ -557,6 +570,23 @@ export async function executeClaudeAction(action: ClaudeAction): Promise<boolean
             tags: ['file-action', 'planning'],
             actionType: action.type,
             target: action.target
+          }
+        });
+        return true;
+
+      case 'generate_tests':
+        // Trigger test generation with Claude
+        useMessageBus.getState().sendMessage({
+          sender: 'CLAUDE_PLANNER',
+          receiver: 'ALL',
+          type: 'task',
+          content: `Test generation recommended: ${action.reason}`,
+          priority: action.priority === 'high' ? 'high' : 'medium',
+          metadata: {
+            tags: ['test-generation', 'planning', 'automation'],
+            actionType: action.type,
+            target: action.target || 'all',
+            suggestion: 'Use the 🧪 Generate Tests button to create comprehensive test files'
           }
         });
         return true;
