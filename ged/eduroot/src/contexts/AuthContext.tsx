@@ -10,7 +10,7 @@ interface AuthContextType {
   supabaseUser: SupabaseUser | null
   loading: boolean
   signIn: (email: string, password: string) => Promise<void>
-  signUp: (email: string, password: string, country?: string) => Promise<void>
+  signUp: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>
   createAnonymousUser: (country?: string) => Promise<void>
 }
@@ -23,6 +23,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Skip during SSR/build
+    if (typeof window === 'undefined') {
+      setLoading(false)
+      return
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSupabaseUser(session?.user ?? null)
@@ -75,7 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error
   }
 
-  const signUp = async (email: string, password: string, country?: string) => {
+  const signUp = async (email: string, password: string) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -88,7 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (error) throw error
   }
 
-  const createAnonymousUser = async (country?: string) => {
+  const createAnonymousUser = async () => {
     // For anonymous users, we'll create a local session
     // This will be implemented in Phase 5 for classroom mode
     throw new Error('Anonymous mode not yet implemented')

@@ -1,0 +1,109 @@
+{
+  "subject": "English Language Arts",
+  "grades": {
+    "kindergarten": {
+      "name": "Kindergarten",
+      "order": 0,
+      "topics": {
+        "phonics": {
+          "name": "Phonics and Letter Recognition",
+          "order": 1,
+          "subtopics": {
+            "alphabet_recognition": {
+              "name": "Alphabet Recognition",
+              "order": 1,
+              "learning_objective": "Recognize and name all uppercase and lowercase letters",
+              "prerequisites": [],
+              "estimated_duration": "4-5 lessons"
+            },
+            "letter_sounds": {
+              "name": "Letter Sounds",
+              "order": 2,
+              "learning_objective": "Associate letters with their most common sounds",
+              "prerequisites": ["alphabet_recognition"],
+              "estimated_duration": "6-8 lessons"
+            }
+          }
+        },
+        "sight_words": {
+          "name": "Sight Words",
+          "order": 2,
+          "subtopics": {
+            "basic_sight_words": {
+              "name": "Basic Sight Words",
+              "order": 1,
+              "learning_objective": "Recognize common sight words: the, and, a, to, said, you, he, I, of, it",
+              "prerequisites": ["phonics.alphabet_recognition"],
+              "estimated_duration": "3-4 lessons"
+            }
+          }
+        }
+      }
+    },
+    "grade_1": {
+      "name": "1st Grade",
+      "order": 1,
+      "topics": {
+        "reading_comprehension": {
+          "name": "Reading Comprehension",
+          "order": 1,
+          "subtopics": {
+            "simple_sentences": {
+              "name": "Reading Simple Sentences",
+              "order": 1,
+              "learning_objective": "Read and understand simple sentences with familiar words",
+              "prerequisites": ["kindergarten.sight_words.basic_sight_words", "kindergarten.phonics.letter_sounds"],
+              "estimated_duration": "4-5 lessons"
+            },
+            "story_elements": {
+              "name": "Story Elements",
+              "order": 2,
+              "learning_objective": "Identify characters, setting, and main events in simple stories",
+              "prerequisites": ["simple_sentences"],
+              "estimated_duration": "3-4 lessons"
+            }
+          }
+        },
+        "writing": {
+          "name": "Writing",
+          "order": 2,
+          "subtopics": {
+            "sentence_writing": {
+              "name": "Writing Simple Sentences",
+              "order": 1,
+              "learning_objective": "Write complete sentences with proper capitalization and punctuation",
+              "prerequisites": ["reading_comprehension.simple_sentences"],
+              "estimated_duration": "4-5 lessons"
+            }
+          }
+        }
+      }
+    },
+    "grade_2": {
+      "name": "2nd Grade",
+      "order": 2,
+      "topics": {
+        "advanced_reading": {
+          "name": "Advanced Reading Skills",
+          "order": 1,
+          "subtopics": {
+            "fluent_reading": {
+              "name": "Fluent Reading",
+              "order": 1,
+              "learning_objective": "Read grade-level text with accuracy, appropriate rate, and expression",
+              "prerequisites": ["grade_1.reading_comprehension.story_elements"],
+              "estimated_duration": "6-8 lessons"
+            },
+            "reading_strategies": {
+              "name": "Reading Strategies",
+              "order": 2,
+              "learning_objective": "Use context clues and word analysis to understand unfamiliar words",
+              "prerequisites": ["fluent_reading"],
+              "estimated_duration": "4-5 lessons"
+            }
+          }
+        }
+      }
+    }
+  }
+}

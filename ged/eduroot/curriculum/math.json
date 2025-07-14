@@ -1,0 +1,109 @@
+{
+  "subject": "Mathematics",
+  "grades": {
+    "kindergarten": {
+      "name": "Kindergarten",
+      "order": 0,
+      "topics": {
+        "counting": {
+          "name": "Counting and Numbers",
+          "order": 1,
+          "subtopics": {
+            "numbers_1_10": {
+              "name": "Numbers 1-10",
+              "order": 1,
+              "learning_objective": "Recognize and count numbers 1 through 10",
+              "prerequisites": [],
+              "estimated_duration": "2-3 lessons"
+            },
+            "counting_objects": {
+              "name": "Counting Objects",
+              "order": 2,
+              "learning_objective": "Count real objects and match quantities to numbers",
+              "prerequisites": ["numbers_1_10"],
+              "estimated_duration": "2-3 lessons"
+            }
+          }
+        },
+        "basic_shapes": {
+          "name": "Basic Shapes",
+          "order": 2,
+          "subtopics": {
+            "circle_square_triangle": {
+              "name": "Circle, Square, Triangle",
+              "order": 1,
+              "learning_objective": "Identify and name basic geometric shapes",
+              "prerequisites": [],
+              "estimated_duration": "2 lessons"
+            }
+          }
+        }
+      }
+    },
+    "grade_1": {
+      "name": "1st Grade",
+      "order": 1,
+      "topics": {
+        "addition_subtraction": {
+          "name": "Addition and Subtraction",
+          "order": 1,
+          "subtopics": {
+            "addition_within_10": {
+              "name": "Addition within 10",
+              "order": 1,
+              "learning_objective": "Add numbers with sums up to 10",
+              "prerequisites": ["counting.numbers_1_10"],
+              "estimated_duration": "3-4 lessons"
+            },
+            "subtraction_within_10": {
+              "name": "Subtraction within 10",
+              "order": 2,
+              "learning_objective": "Subtract numbers within 10",
+              "prerequisites": ["addition_within_10"],
+              "estimated_duration": "3-4 lessons"
+            }
+          }
+        },
+        "place_value": {
+          "name": "Place Value",
+          "order": 2,
+          "subtopics": {
+            "tens_and_ones": {
+              "name": "Tens and Ones",
+              "order": 1,
+              "learning_objective": "Understand place value for numbers 10-99",
+              "prerequisites": ["addition_subtraction.addition_within_10"],
+              "estimated_duration": "4-5 lessons"
+            }
+          }
+        }
+      }
+    },
+    "grade_2": {
+      "name": "2nd Grade", 
+      "order": 2,
+      "topics": {
+        "addition_subtraction_advanced": {
+          "name": "Advanced Addition and Subtraction",
+          "order": 1,
+          "subtopics": {
+            "addition_within_100": {
+              "name": "Addition within 100",
+              "order": 1,
+              "learning_objective": "Add two-digit numbers with regrouping",
+              "prerequisites": ["grade_1.place_value.tens_and_ones"],
+              "estimated_duration": "5-6 lessons"
+            },
+            "subtraction_within_100": {
+              "name": "Subtraction within 100",
+              "order": 2,
+              "learning_objective": "Subtract two-digit numbers with regrouping",
+              "prerequisites": ["addition_within_100"],
+              "estimated_duration": "5-6 lessons"
+            }
+          }
+        }
+      }
+    }
+  }
+}
