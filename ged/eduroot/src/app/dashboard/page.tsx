@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { curriculumService } from '@/services/curriculumService'
+import { progressService } from '@/services/progressService'
 
 interface CurriculumTopic {
   id: string
@@ -12,7 +13,16 @@ interface CurriculumTopic {
     id: string
     name: string
     unlocked: boolean
+    completed: boolean
   }>
+}
+
+interface UserStats {
+  lessonsCompleted: number
+  quizzesPassed: number
+  totalXP: number
+  currentStreak: number
+  lastLessonDate: string
 }
 
 export default function Dashboard() {
@@ -23,6 +33,14 @@ export default function Dashboard() {
   const [topics, setTopics] = useState<CurriculumTopic[]>([])
   const [currentGrade, setCurrentGrade] = useState('grade_1')
   const [userPlacement, setUserPlacement] = useState('')
+  const [userStats, setUserStats] = useState<UserStats>({
+    lessonsCompleted: 0,
+    quizzesPassed: 0,
+    totalXP: 0,
+    currentStreak: 0,
+    lastLessonDate: ''
+  })
+  const [lastLesson, setLastLesson] = useState<any>(null)
 
   useEffect(() => {
     if (!loading && !user) {
@@ -33,7 +51,7 @@ export default function Dashboard() {
   useEffect(() => {
     loadSubjects()
     
-    // Load user's placement level
+    // Load user's placement level and progress
     if (user) {
       const placement = localStorage.getItem(`placement_${user.id}`)
       if (placement) {
@@ -50,6 +68,9 @@ export default function Dashboard() {
           setCurrentGrade(mappedGrade)
         }
       }
+      
+      // Load user stats and last lesson
+      loadUserProgress()
     }
   }, [user])
 
@@ -68,9 +89,19 @@ export default function Dashboard() {
     }
   }
 
+  const loadUserProgress = () => {
+    if (!user) return
+    
+    const stats = progressService.getUserStats(user.id)
+    setUserStats(stats)
+    
+    const lastLessonData = progressService.getLastLesson(user.id)
+    setLastLesson(lastLessonData)
+  }
+
   const loadCurriculum = async () => {
     try {
-      const curriculum = await curriculumService.getUserPath(selectedSubject, currentGrade)
+      const curriculum = await curriculumService.getUserPath(selectedSubject, currentGrade, user?.id)
       setTopics(curriculum.topics)
     } catch (error) {
       console.error('Failed to load curriculum:', error)
@@ -116,10 +147,11 @@ export default function Dashboard() {
               </div>
               <button 
                 onClick={() => {
-                  // Clear onboarding for testing
+                  // Clear all demo data for testing
                   if (user) {
                     localStorage.removeItem(`onboarding_${user.id}`)
                     localStorage.removeItem(`placement_${user.id}`)
+                    progressService.clearProgress(user.id)
                   }
                   router.push('/')
                 }}
@@ -169,6 +201,29 @@ export default function Dashboard() {
           </select>
         </div>
 
+        {/* Continue Learning Section */}
+        {lastLesson && (
+          <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white mb-8">
+            <h2 className="text-xl font-bold mb-2">Continue Learning</h2>
+            <p className="mb-4">
+              Resume your lesson: <span className="font-semibold">{lastLesson.subtopic.replace(/_/g, ' ')}</span>
+            </p>
+            <div className="flex space-x-4">
+              <button
+                onClick={() => startLesson(lastLesson.topic, lastLesson.subtopic)}
+                className="bg-white text-blue-600 px-6 py-2 rounded-md font-medium hover:bg-gray-100"
+              >
+                {lastLesson.completed ? 'Review Lesson' : 'Continue Lesson'}
+              </button>
+              {lastLesson.completed && (
+                <div className="bg-green-500 text-white px-3 py-2 rounded-md text-sm">
+                  ✅ Completed
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Learning Path */}
         <div className="space-y-6">
           <h2 className="text-lg font-semibold text-gray-900">Your Learning Path</h2>
@@ -181,20 +236,33 @@ export default function Dashboard() {
                 {topic.subtopics.map((subtopic) => (
                   <div
                     key={subtopic.id}
-                    className={`border rounded-lg p-4 transition-colors ${
-                      subtopic.unlocked
-                        ? 'border-green-200 bg-green-50 hover:bg-green-100'
+                    className={`border rounded-lg p-4 transition-colors relative ${
+                      subtopic.completed
+                        ? 'border-green-300 bg-green-50'
+                        : subtopic.unlocked
+                        ? 'border-blue-200 bg-blue-50 hover:bg-blue-100'
                         : 'border-gray-200 bg-gray-50'
                     }`}
                   >
-                    <h4 className="font-medium text-gray-900 mb-2">{subtopic.name}</h4>
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium text-gray-900">{subtopic.name}</h4>
+                      {subtopic.completed && (
+                        <div className="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                          ✅ Complete
+                        </div>
+                      )}
+                    </div>
                     
                     {subtopic.unlocked ? (
                       <button
                         onClick={() => startLesson(topic.id, subtopic.id)}
-                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                        className={`w-full py-2 px-4 rounded-md transition-colors ${
+                          subtopic.completed
+                            ? 'bg-green-600 text-white hover:bg-green-700'
+                            : 'bg-blue-600 text-white hover:bg-blue-700'
+                        }`}
                       >
-                        Start Lesson
+                        {subtopic.completed ? 'Review Lesson' : 'Start Lesson'}
                       </button>
                     ) : (
                       <div className="text-gray-500 text-sm">
@@ -211,20 +279,30 @@ export default function Dashboard() {
         {/* Progress Overview */}
         <div className="mt-8 bg-white rounded-lg shadow-sm border p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Progress</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">0</div>
+              <div className="text-3xl font-bold text-blue-600">{userStats.lessonsCompleted}</div>
               <div className="text-gray-600">Lessons Completed</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">0</div>
+              <div className="text-3xl font-bold text-green-600">{userStats.quizzesPassed}</div>
               <div className="text-gray-600">Quizzes Passed</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">0</div>
+              <div className="text-3xl font-bold text-purple-600">{userStats.totalXP}</div>
               <div className="text-gray-600">XP Earned</div>
             </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-orange-600">{userStats.currentStreak}</div>
+              <div className="text-gray-600">Day Streak</div>
+            </div>
           </div>
+          
+          {userStats.lastLessonDate && (
+            <div className="mt-4 text-center text-sm text-gray-500">
+              Last activity: {new Date(userStats.lastLessonDate).toLocaleDateString()}
+            </div>
+          )}
         </div>
       </main>
     </div>

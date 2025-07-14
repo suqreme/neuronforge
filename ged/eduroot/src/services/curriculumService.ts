@@ -86,13 +86,23 @@ export class CurriculumService {
     }
   }
 
-  async getUserPath(subject: string, grade: string): Promise<{topics: Array<{id: string, name: string, subtopics: Array<{id: string, name: string, unlocked: boolean}>}>}> {
+  async getUserPath(subject: string, grade: string, userId?: string): Promise<{topics: Array<{id: string, name: string, subtopics: Array<{id: string, name: string, unlocked: boolean, completed: boolean}>}>}> {
     try {
       const curriculum = await this.loadSubject(subject)
       const gradeData = curriculum.grades[grade]
       
       if (!gradeData) {
         throw new Error(`Grade ${grade} not found in ${subject} curriculum`)
+      }
+
+      // Get user's unlocked lessons and completed lessons
+      let unlockedLessons: string[] = []
+      let completedLessons: string[] = []
+      
+      if (userId) {
+        const { progressService } = await import('./progressService')
+        unlockedLessons = progressService.getUnlockedLessons(userId, subject, grade)
+        completedLessons = progressService.getCompletedLessons(userId, subject, grade)
       }
 
       const topics = Object.entries(gradeData.topics)
@@ -102,11 +112,15 @@ export class CurriculumService {
           name: topicData.name,
           subtopics: Object.entries(topicData.subtopics)
             .sort(([,a], [,b]) => a.order - b.order)
-            .map(([subtopicId, subtopicData]) => ({
-              id: subtopicId,
-              name: subtopicData.name,
-              unlocked: this.isSubtopicUnlocked(subject, grade, topicId, subtopicId) // TODO: Pass actual user progress
-            }))
+            .map(([subtopicId, subtopicData]) => {
+              const lessonKey = `${topicId}_${subtopicId}`
+              return {
+                id: subtopicId,
+                name: subtopicData.name,
+                unlocked: userId ? unlockedLessons.includes(lessonKey) : this.isSubtopicUnlocked(subject, grade, topicId, subtopicId),
+                completed: userId ? completedLessons.includes(lessonKey) : false
+              }
+            })
         }))
 
       return { topics }

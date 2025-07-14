@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { curriculumService } from '@/services/curriculumService'
+import { progressService } from '@/services/progressService'
 import LessonContent from '@/components/lesson/LessonContent'
 import QuizComponent from '@/components/lesson/QuizComponent'
 
@@ -49,6 +50,7 @@ function LessonPageContent() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [subtopicInfo, setSubtopicInfo] = useState<any>(null)
+  const [lessonStartTime, setLessonStartTime] = useState<Date | null>(null)
 
   useEffect(() => {
     if (!user) {
@@ -108,6 +110,12 @@ function LessonPageContent() {
       const lesson = await response.json()
       console.log('Lesson data received:', lesson)
       setLessonData(lesson)
+      
+      // Track lesson start
+      if (user) {
+        progressService.startLesson(user.id, subject, grade, topic, subtopic)
+        setLessonStartTime(new Date())
+      }
     } catch (error) {
       console.error('Error loading lesson:', error)
       
@@ -132,6 +140,12 @@ function LessonPageContent() {
           learning_objective: `Learn about ${subtopic.replace(/_/g, ' ')}`,
           estimated_duration: '5-10 minutes'
         })
+      }
+      
+      // Track lesson start even with fallback
+      if (user) {
+        progressService.startLesson(user.id, subject, grade, topic, subtopic)
+        setLessonStartTime(new Date())
       }
     } finally {
       setLoading(false)
@@ -175,6 +189,16 @@ function LessonPageContent() {
 
   const handleQuizComplete = (passed: boolean, score: number) => {
     if (passed) {
+      // Calculate time spent
+      const timeSpent = lessonStartTime 
+        ? Math.round((new Date().getTime() - lessonStartTime.getTime()) / (1000 * 60)) 
+        : 0
+      
+      // Mark lesson as completed
+      if (user) {
+        progressService.completeLesson(user.id, subject, grade, topic, subtopic, score, timeSpent)
+      }
+      
       setCurrentStep('complete')
     } else {
       // Allow retry - stay on quiz
@@ -183,7 +207,9 @@ function LessonPageContent() {
   }
 
   const goToDashboard = () => {
+    // Force dashboard refresh to show updated progress
     router.push('/dashboard')
+    router.refresh()
   }
 
   if (!user) {
