@@ -1,14 +1,28 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
+// Check if we have valid Supabase configuration
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+// Only create client if we have real configuration
+const hasValidConfig = supabaseUrl && supabaseKey && 
+  supabaseUrl !== 'your-supabase-url' && 
+  supabaseKey !== 'your-supabase-anon-key'
+
+export const supabase = hasValidConfig 
+  ? createClient(supabaseUrl, supabaseKey)
+  : null
 
 // For server-side operations
 export const createServerClient = () => {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-key'
-  )
+  const serverUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serverKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  
+  if (!serverUrl || !serverKey || 
+      serverUrl === 'your-supabase-url' || 
+      serverKey === 'your-supabase-service-role-key') {
+    return null
+  }
+  
+  return createClient(serverUrl, serverKey)
 }

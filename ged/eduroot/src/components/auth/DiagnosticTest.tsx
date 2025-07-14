@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
 
@@ -27,26 +27,31 @@ export default function DiagnosticTest({ estimatedGrade, onPlacementComplete }: 
 
   const { user } = useAuth()
 
-  useEffect(() => {
-    generateDiagnosticQuestions()
-  }, [estimatedGrade])
-
-  const generateDiagnosticQuestions = async () => {
+  const generateDiagnosticQuestions = useCallback(async () => {
     setLoading(true)
     
     try {
-      // Import the AI service
-      const { generateDiagnosticTest } = await import('@/lib/openai')
-      
-      // Generate questions using AI with curriculum-based prompts
-      const testData = await generateDiagnosticTest({
-        estimated_grade: estimatedGrade,
-        subject: 'Mathematics', // Start with math, could expand to include ELA
-        target_topics: ['counting', 'addition_subtraction', 'place_value']
+      // Call the diagnostic API route
+      const response = await fetch('/api/ai/diagnostic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          estimated_grade: estimatedGrade,
+          subject: 'Mathematics', // Start with math, could expand to include ELA
+          target_topics: ['counting', 'addition_subtraction', 'place_value']
+        })
       })
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+
+      const testData = await response.json()
       
       // Convert AI response to our format
-      const aiQuestions: QuizQuestion[] = testData.questions?.map((q: any, index: number) => ({
+      const aiQuestions: QuizQuestion[] = testData.questions?.map((q: { question: string; options: string[]; correct_answer: number; grade_level?: string }) => ({
         question: q.question,
         options: q.options,
         correct: q.correct_answer,
@@ -105,7 +110,11 @@ export default function DiagnosticTest({ estimatedGrade, onPlacementComplete }: 
     }
     
     setLoading(false)
-  }
+  }, [estimatedGrade])
+
+  useEffect(() => {
+    generateDiagnosticQuestions()
+  }, [generateDiagnosticQuestions])
 
   const handleAnswerSelect = (answerIndex: number) => {
     setSelectedAnswer(answerIndex)
@@ -151,7 +160,7 @@ export default function DiagnosticTest({ estimatedGrade, onPlacementComplete }: 
     }
 
     // Save placement to database
-    if (user) {
+    if (user && supabase) {
       await supabase
         .from('user_progress')
         .upsert({

@@ -1,6 +1,3 @@
-import { promises as fs } from 'fs'
-import path from 'path'
-
 export interface CurriculumNode {
   name: string
   order: number
@@ -30,7 +27,6 @@ export interface CurriculumSubject {
 
 export class CurriculumService {
   private curriculumCache: Map<string, CurriculumSubject> = new Map()
-  private curriculumPath = path.join(process.cwd(), 'curriculum')
 
   async loadSubject(subject: string): Promise<CurriculumSubject> {
     // Check cache first
@@ -39,25 +35,31 @@ export class CurriculumService {
     }
 
     try {
-      const filePath = path.join(this.curriculumPath, `${subject.toLowerCase()}.json`)
-      const fileContent = await fs.readFile(filePath, 'utf-8')
-      const curriculum: CurriculumSubject = JSON.parse(fileContent)
+      const response = await fetch(`/api/curriculum/${subject.toLowerCase()}`)
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+      
+      const curriculum: CurriculumSubject = await response.json()
       
       // Cache the loaded curriculum
       this.curriculumCache.set(subject, curriculum)
       return curriculum
-    } catch (error) {
+    } catch {
       throw new Error(`Failed to load curriculum for subject: ${subject}`)
     }
   }
 
   async getAllSubjects(): Promise<string[]> {
     try {
-      const files = await fs.readdir(this.curriculumPath)
-      return files
-        .filter(file => file.endsWith('.json'))
-        .map(file => file.replace('.json', ''))
-    } catch (error) {
+      const response = await fetch('/api/curriculum/subjects')
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+      
+      const { subjects } = await response.json()
+      return subjects
+    } catch {
       throw new Error('Failed to read curriculum directory')
     }
   }
@@ -66,7 +68,7 @@ export class CurriculumService {
     try {
       const curriculum = await this.loadSubject(subject)
       return curriculum.grades[grade]?.topics[topic]?.subtopics[subtopic] || null
-    } catch (error) {
+    } catch {
       return null
     }
   }
@@ -90,7 +92,7 @@ export class CurriculumService {
             .map(([subtopicId, subtopicData]) => ({
               id: subtopicId,
               name: subtopicData.name,
-              unlocked: this.isSubtopicUnlocked(subject, grade, topicId, subtopicId, []) // TODO: Pass actual user progress
+              unlocked: this.isSubtopicUnlocked(subject, grade, topicId, subtopicId) // TODO: Pass actual user progress
             }))
         }))
 
@@ -100,7 +102,7 @@ export class CurriculumService {
     }
   }
 
-  private isSubtopicUnlocked(subject: string, grade: string, topic: string, subtopic: string, completedSubtopics: string[]): boolean {
+  private isSubtopicUnlocked(subject: string, grade: string, topic: string, subtopic: string): boolean {
     // For now, unlock the first subtopic of the first topic
     // In a real implementation, this would check prerequisites against user progress
     const isFirstTopicFirstSubtopic = topic === Object.keys(this.curriculumCache.get(subject)?.grades[grade]?.topics || {})[0]
@@ -122,7 +124,7 @@ export class CurriculumService {
 
       // Check if all prerequisites are in user's completed list
       return subtopicData.prerequisites.every(prereq => userProgress.includes(prereq))
-    } catch (error) {
+    } catch {
       return false
     }
   }

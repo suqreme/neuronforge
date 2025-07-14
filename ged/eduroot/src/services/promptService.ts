@@ -1,46 +1,28 @@
-import { promises as fs } from 'fs'
-import path from 'path'
-
 export interface PromptVariables {
   [key: string]: string | number | object
 }
 
 export class PromptService {
   private promptCache: Map<string, string> = new Map()
-  private promptsPath = path.join(process.cwd(), 'prompts')
-
-  async loadPrompt(promptName: string): Promise<string> {
-    // Check cache first
-    if (this.promptCache.has(promptName)) {
-      return this.promptCache.get(promptName)!
-    }
-
-    try {
-      const filePath = path.join(this.promptsPath, `${promptName}.md`)
-      const content = await fs.readFile(filePath, 'utf-8')
-      
-      // Cache the loaded prompt
-      this.promptCache.set(promptName, content)
-      return content
-    } catch (error) {
-      throw new Error(`Failed to load prompt: ${promptName}`)
-    }
-  }
 
   async renderPrompt(promptName: string, variables: PromptVariables): Promise<string> {
     try {
-      let prompt = await this.loadPrompt(promptName)
-      
-      // Replace variables in the format {{variable_name}}
-      for (const [key, value] of Object.entries(variables)) {
-        const placeholder = `{{${key}}}`
-        const replacement = typeof value === 'object' ? JSON.stringify(value) : String(value)
-        prompt = prompt.replace(new RegExp(placeholder, 'g'), replacement)
+      const response = await fetch(`/api/prompts/${promptName}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ variables })
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
       }
 
+      const { prompt } = await response.json()
       return prompt
-    } catch (error) {
-      throw new Error(`Failed to render prompt ${promptName}: ${error}`)
+    } catch {
+      throw new Error(`Failed to render prompt ${promptName}`)
     }
   }
 
@@ -115,14 +97,8 @@ export class PromptService {
   }
 
   async listAvailablePrompts(): Promise<string[]> {
-    try {
-      const files = await fs.readdir(this.promptsPath)
-      return files
-        .filter(file => file.endsWith('.md'))
-        .map(file => file.replace('.md', ''))
-    } catch (error) {
-      throw new Error('Failed to list available prompts')
-    }
+    // Return known prompts for now
+    return ['ai-teacher', 'diagnostic', 'quiz-generator', 'reviewer', 'feedback']
   }
 
   // Clear cache - useful for development/testing

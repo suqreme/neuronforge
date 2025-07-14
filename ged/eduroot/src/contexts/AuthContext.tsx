@@ -29,6 +29,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return
     }
 
+    // Skip if Supabase is not configured
+    if (!supabase) {
+      console.warn('Supabase not configured - running in demo mode')
+      setLoading(false)
+      return
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSupabaseUser(session?.user ?? null)
@@ -57,6 +64,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const fetchUserProfile = async (userId: string) => {
+    if (!supabase) return
+    
     try {
       const { data, error } = await supabase
         .from('users')
@@ -74,6 +83,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signIn = async (email: string, password: string) => {
+    if (!supabase) {
+      // Demo mode - create a fake user
+      const demoUser = {
+        id: 'demo-user',
+        email,
+        country: 'US',
+        isAnonymous: false,
+        subscription_status: 'free' as const,
+        created_at: new Date().toISOString()
+      }
+      setUser(demoUser)
+      return
+    }
+    
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -82,6 +105,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signUp = async (email: string, password: string) => {
+    if (!supabase) {
+      // Demo mode - create a fake user
+      const demoUser = {
+        id: 'demo-user',
+        email,
+        country: 'US',
+        isAnonymous: false,
+        subscription_status: 'free' as const,
+        created_at: new Date().toISOString()
+      }
+      setUser(demoUser)
+      return
+    }
+    
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -90,6 +127,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signOut = async () => {
+    if (!supabase) {
+      setUser(null)
+      return
+    }
+    
     const { error } = await supabase.auth.signOut()
     if (error) throw error
   }
