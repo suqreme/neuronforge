@@ -1,16 +1,33 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useRouter } from 'next/navigation'
 import LoginForm from '@/components/auth/LoginForm'
 import GradeEstimate from '@/components/auth/GradeEstimate'
 import DiagnosticTest from '@/components/auth/DiagnosticTest'
 
 export default function Home() {
   const { user, loading } = useAuth()
+  const router = useRouter()
   const [step, setStep] = useState<'login' | 'estimate' | 'diagnostic' | 'complete'>('login')
   const [estimatedGrade, setEstimatedGrade] = useState('')
   const [placementLevel, setPlacementLevel] = useState('')
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false)
+
+  // Check if user has completed onboarding
+  useEffect(() => {
+    if (user && !loading) {
+      // In demo mode, check localStorage for onboarding completion
+      const onboardingComplete = localStorage.getItem(`onboarding_${user.id}`)
+      if (onboardingComplete) {
+        setHasCompletedOnboarding(true)
+        router.push('/dashboard')
+      } else {
+        setStep('estimate')
+      }
+    }
+  }, [user, loading, router])
 
   const handleGradeSelected = (grade: string) => {
     setEstimatedGrade(grade)
@@ -20,6 +37,12 @@ export default function Home() {
   const handlePlacementComplete = (level: string) => {
     setPlacementLevel(level)
     setStep('complete')
+    
+    // Mark onboarding as complete
+    if (user) {
+      localStorage.setItem(`onboarding_${user.id}`, 'true')
+      localStorage.setItem(`placement_${user.id}`, level)
+    }
   }
 
   if (loading) {
@@ -51,8 +74,8 @@ export default function Home() {
     )
   }
 
-  if (user && step === 'login') {
-    // Check if user has completed onboarding
+  // If user is logged in but hasn't completed onboarding, continue with flow
+  if (user && step === 'login' && !hasCompletedOnboarding) {
     setStep('estimate')
   }
 
@@ -91,8 +114,12 @@ export default function Home() {
             </p>
             <button
               onClick={() => {
-                // In a real app, you'd save the placement to the database here
-                window.location.href = '/dashboard'
+                // Mark onboarding as complete and navigate to dashboard
+                if (user) {
+                  localStorage.setItem(`onboarding_${user.id}`, 'true')
+                  localStorage.setItem(`placement_${user.id}`, placementLevel)
+                }
+                router.push('/dashboard')
               }}
               className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >

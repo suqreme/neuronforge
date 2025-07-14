@@ -22,6 +22,7 @@ export default function Dashboard() {
   const [selectedSubject, setSelectedSubject] = useState('math')
   const [topics, setTopics] = useState<CurriculumTopic[]>([])
   const [currentGrade, setCurrentGrade] = useState('grade_1')
+  const [userPlacement, setUserPlacement] = useState('')
 
   useEffect(() => {
     if (!loading && !user) {
@@ -31,7 +32,26 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadSubjects()
-  }, [])
+    
+    // Load user's placement level
+    if (user) {
+      const placement = localStorage.getItem(`placement_${user.id}`)
+      if (placement) {
+        setUserPlacement(placement)
+        // Convert placement to grade format
+        const gradeMap: Record<string, string> = {
+          'Kindergarten': 'kindergarten',
+          '1st Grade': 'grade_1',
+          '2nd Grade': 'grade_2',
+          '3rd Grade': 'grade_3'
+        }
+        const mappedGrade = gradeMap[placement]
+        if (mappedGrade) {
+          setCurrentGrade(mappedGrade)
+        }
+      }
+    }
+  }, [user])
 
   useEffect(() => {
     if (selectedSubject) {
@@ -84,17 +104,27 @@ export default function Dashboard() {
           <div className="flex justify-between items-center py-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">EduRoot Dashboard</h1>
-              <p className="text-gray-600">Welcome back, {user.email}!</p>
+              <p className="text-gray-600">
+                Welcome back, {user.email}! 
+                {userPlacement && <span className="ml-2 text-blue-600">• Placed at {userPlacement}</span>}
+              </p>
             </div>
             <div className="flex items-center space-x-4">
               <div className="bg-blue-100 px-3 py-1 rounded-full">
                 <span className="text-blue-800 text-sm font-medium">Level: {currentGrade.replace('_', ' ')}</span>
               </div>
               <button 
-                onClick={() => router.push('/')}
-                className="text-gray-500 hover:text-gray-700"
+                onClick={() => {
+                  // Clear onboarding for testing
+                  if (user) {
+                    localStorage.removeItem(`onboarding_${user.id}`)
+                    localStorage.removeItem(`placement_${user.id}`)
+                  }
+                  router.push('/')
+                }}
+                className="text-gray-500 hover:text-gray-700 text-sm"
               >
-                Settings
+                Reset Demo
               </button>
             </div>
           </div>
