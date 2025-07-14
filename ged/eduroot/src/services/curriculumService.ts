@@ -66,9 +66,22 @@ export class CurriculumService {
 
   async getSubtopic(subject: string, grade: string, topic: string, subtopic: string): Promise<Subtopic | null> {
     try {
+      console.log('Loading subtopic:', { subject, grade, topic, subtopic })
       const curriculum = await this.loadSubject(subject)
-      return curriculum.grades[grade]?.topics[topic]?.subtopics[subtopic] || null
-    } catch {
+      console.log('Curriculum loaded:', curriculum)
+      
+      const gradeData = curriculum.grades[grade]
+      console.log('Grade data:', gradeData)
+      
+      const topicData = gradeData?.topics[topic]
+      console.log('Topic data:', topicData)
+      
+      const subtopicData = topicData?.subtopics[subtopic]
+      console.log('Subtopic data:', subtopicData)
+      
+      return subtopicData || null
+    } catch (error) {
+      console.error('Error getting subtopic:', error)
       return null
     }
   }

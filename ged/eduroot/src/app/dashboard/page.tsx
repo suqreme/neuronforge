@@ -78,6 +78,7 @@ export default function Dashboard() {
   }
 
   const startLesson = (topicId: string, subtopicId: string) => {
+    console.log('Starting lesson with:', { selectedSubject, currentGrade, topicId, subtopicId })
     router.push(`/lesson?subject=${selectedSubject}&grade=${currentGrade}&topic=${topicId}&subtopic=${subtopicId}`)
   }
 
