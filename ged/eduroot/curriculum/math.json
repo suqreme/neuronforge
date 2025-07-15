@@ -104,6 +104,52 @@
           }
         }
       }
+    },
+    "grade_3": {
+      "name": "3rd Grade",
+      "order": 3,
+      "topics": {
+        "multiplication_division": {
+          "name": "Multiplication and Division",
+          "order": 1,
+          "subtopics": {
+            "multiplication_facts": {
+              "name": "Multiplication Facts",
+              "order": 1,
+              "learning_objective": "Learn multiplication tables 1-12",
+              "prerequisites": ["grade_2.addition_subtraction_advanced.addition_within_100"],
+              "estimated_duration": "6-8 lessons"
+            },
+            "division_basics": {
+              "name": "Division Basics",
+              "order": 2,
+              "learning_objective": "Understand division as the inverse of multiplication",
+              "prerequisites": ["multiplication_facts"],
+              "estimated_duration": "5-6 lessons"
+            }
+          }
+        },
+        "fractions": {
+          "name": "Introduction to Fractions",
+          "order": 2,
+          "subtopics": {
+            "fraction_concepts": {
+              "name": "Fraction Concepts",
+              "order": 1,
+              "learning_objective": "Understand fractions as parts of a whole",
+              "prerequisites": ["multiplication_division.multiplication_facts"],
+              "estimated_duration": "4-5 lessons"
+            },
+            "comparing_fractions": {
+              "name": "Comparing Fractions",
+              "order": 2,
+              "learning_objective": "Compare fractions with the same denominator",
+              "prerequisites": ["fraction_concepts"],
+              "estimated_duration": "3-4 lessons"
+            }
+          }
+        }
+      }
     }
   }
 }

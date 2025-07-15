@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
@@ -32,14 +34,17 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        {isSignUp ? 'Create Account' : 'Sign In'}
-      </h2>
+    <Card className="max-w-md mx-auto">
+      <CardHeader>
+        <CardTitle className="text-2xl text-center">
+          {isSignUp ? 'Create Account' : 'Sign In'}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="email" className="block text-sm font-medium text-foreground">
             Email
           </label>
           <input
@@ -48,12 +53,12 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
+            className="mt-1 block w-full border border-input bg-background px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
 
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password" className="block text-sm font-medium text-foreground">
             Password
           </label>
           <input
@@ -62,13 +67,13 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
+            className="mt-1 block w-full border border-input bg-background px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
 
         {isSignUp && (
           <div>
-            <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="country" className="block text-sm font-medium text-foreground">
               Country (Optional)
             </label>
             <input
@@ -76,44 +81,48 @@ export default function LoginForm() {
               id="country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border"
+              className="mt-1 block w-full border border-input bg-background px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
         )}
 
         {error && (
-          <div className="text-red-600 text-sm text-center">
+          <div className="text-destructive text-sm text-center">
             {error}
           </div>
         )}
 
-        <button
+        <Button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+          className="w-full"
         >
           {loading ? 'Loading...' : (isSignUp ? 'Create Account' : 'Sign In')}
-        </button>
+        </Button>
       </form>
 
       <div className="mt-4 text-center">
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="sm"
           onClick={() => setIsSignUp(!isSignUp)}
-          className="text-blue-600 hover:text-blue-500 text-sm"
         >
           {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
-        </button>
+        </Button>
       </div>
 
       <div className="mt-4 text-center">
-        <button
+        <Button
           type="button"
-          className="text-gray-600 hover:text-gray-500 text-sm underline"
+          variant="link"
+          size="sm"
+          disabled
         >
           Continue as Guest (Coming Soon)
-        </button>
+        </Button>
       </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

@@ -1,0 +1,21 @@
+{
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_SUPABASE_URL": "@supabase-url",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase-anon-key",
+      "SUPABASE_SERVICE_ROLE_KEY": "@supabase-service-role-key",
+      "OPENAI_API_KEY": "@openai-api-key"
+    }
+  },
+  "functions": {
+    "src/app/api/**": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
+}

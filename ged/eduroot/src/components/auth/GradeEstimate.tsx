@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface GradeEstimateProps {
   onGradeSelected: (grade: string) => void
@@ -33,40 +35,44 @@ export default function GradeEstimate({ onGradeSelected }: GradeEstimateProps) {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        What grade level do you think you&apos;re at?
-      </h2>
+    <Card className="max-w-md mx-auto">
+      <CardHeader>
+        <CardTitle className="text-2xl text-center">
+          What grade level do you think you&apos;re at?
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
       
-      <p className="text-gray-600 text-center mb-6">
+      <p className="text-muted-foreground text-center mb-6">
         Don&apos;t worry if you&apos;re not sure! We&apos;ll test your knowledge to find the perfect starting point.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
           {grades.map((grade) => (
-            <label key={grade} className="flex items-center">
+            <label key={grade} className="flex items-center cursor-pointer hover:bg-accent/50 p-2 transition-colors">
               <input
                 type="radio"
                 name="grade"
                 value={grade}
                 checked={selectedGrade === grade}
                 onChange={(e) => setSelectedGrade(e.target.value)}
-                className="mr-3 text-blue-600"
+                className="mr-3 text-primary accent-primary"
               />
-              <span className="text-gray-700">{grade}</span>
+              <span className="text-foreground">{grade}</span>
             </label>
           ))}
         </div>
 
-        <button
+        <Button
           type="submit"
           disabled={!selectedGrade}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full"
         >
           Start Diagnostic Test
-        </button>
+        </Button>
       </form>
-    </div>
+      </CardContent>
+    </Card>
   )
 }

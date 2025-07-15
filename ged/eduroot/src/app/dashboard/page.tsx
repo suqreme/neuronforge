@@ -5,6 +5,13 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { curriculumService } from '@/services/curriculumService'
 import { progressService } from '@/services/progressService'
+import { subscriptionService } from '@/services/subscriptionService'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Progress } from '@/components/ui/progress'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
+import { UserMenu } from '@/components/ui/user-menu'
 
 interface CurriculumTopic {
   id: string
@@ -26,7 +33,7 @@ interface UserStats {
 }
 
 export default function Dashboard() {
-  const { user, loading } = useAuth()
+  const { user, loading, signOut } = useAuth()
   const router = useRouter()
   const [subjects, setSubjects] = useState<string[]>([])
   const [selectedSubject, setSelectedSubject] = useState('math')
@@ -41,6 +48,7 @@ export default function Dashboard() {
     lastLessonDate: ''
   })
   const [lastLesson, setLastLesson] = useState<any>(null)
+  const [subscription, setSubscription] = useState<any>(null)
 
   useEffect(() => {
     if (!loading && !user) {
@@ -69,8 +77,9 @@ export default function Dashboard() {
         }
       }
       
-      // Load user stats and last lesson
+      // Load user stats, last lesson, and subscription
       loadUserProgress()
+      loadSubscriptionInfo()
     }
   }, [user])
 
@@ -97,6 +106,13 @@ export default function Dashboard() {
     
     const lastLessonData = progressService.getLastLesson(user.id)
     setLastLesson(lastLessonData)
+  }
+
+  const loadSubscriptionInfo = () => {
+    if (!user) return
+    
+    const subscriptionData = subscriptionService.getUserSubscription(user.id)
+    setSubscription(subscriptionData)
   }
 
   const loadCurriculum = async () => {
@@ -129,36 +145,59 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-card shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">EduRoot Dashboard</h1>
-              <p className="text-gray-600">
+              <h1 className="text-2xl font-bold text-foreground">EduRoot Dashboard</h1>
+              <p className="text-muted-foreground">
                 Welcome back, {user.email}! 
-                {userPlacement && <span className="ml-2 text-blue-600">• Placed at {userPlacement}</span>}
+                {userPlacement && <span className="ml-2 text-primary">• Placed at {userPlacement}</span>}
               </p>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="bg-blue-100 px-3 py-1 rounded-full">
-                <span className="text-blue-800 text-sm font-medium">Level: {currentGrade.replace('_', ' ')}</span>
-              </div>
-              <button 
-                onClick={() => {
-                  // Clear all demo data for testing
-                  if (user) {
-                    localStorage.removeItem(`onboarding_${user.id}`)
-                    localStorage.removeItem(`placement_${user.id}`)
-                    progressService.clearProgress(user.id)
-                  }
-                  router.push('/')
-                }}
-                className="text-gray-500 hover:text-gray-700 text-sm"
+              <Badge variant="secondary">
+                Level: {currentGrade.replace('_', ' ')}
+              </Badge>
+              <Button 
+                variant="outline"
+                size="sm"
+                onClick={() => router.push('/subscription')}
               >
-                Reset Demo
-              </button>
+                Upgrade
+              </Button>
+              <Button 
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push('/impact')}
+              >
+                🗺️ Impact Map
+              </Button>
+              <Button 
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push('/games')}
+              >
+                Games
+              </Button>
+              <Button 
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push('/achievements')}
+              >
+                Achievements
+              </Button>
+              <Button 
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push('/offline')}
+              >
+                Offline Learning
+              </Button>
+              <ThemeToggle />
+              <UserMenu />
             </div>
           </div>
         </div>
@@ -168,31 +207,28 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Subject Selection */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Choose Your Subject</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">Choose Your Subject</h2>
           <div className="flex space-x-4">
             {subjects.map((subject) => (
-              <button
+              <Button
                 key={subject}
+                variant={selectedSubject === subject ? 'default' : 'outline'}
                 onClick={() => setSelectedSubject(subject)}
-                className={`px-6 py-3 rounded-lg font-medium transition-colors ${
-                  selectedSubject === subject
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
-                }`}
+                className="px-6 py-3"
               >
                 {subject === 'math' ? 'Mathematics' : 'English Language Arts'}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
 
         {/* Grade Selection */}
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Current Grade Level</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4">Current Grade Level</h2>
           <select
             value={currentGrade}
             onChange={(e) => setCurrentGrade(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+            className="px-4 py-2 border border-input bg-background text-foreground focus:ring-ring focus:border-ring"
           >
             <option value="kindergarten">Kindergarten</option>
             <option value="grade_1">1st Grade</option>
@@ -203,107 +239,164 @@ export default function Dashboard() {
 
         {/* Continue Learning Section */}
         {lastLesson && (
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white mb-8">
-            <h2 className="text-xl font-bold mb-2">Continue Learning</h2>
-            <p className="mb-4">
-              Resume your lesson: <span className="font-semibold">{lastLesson.subtopic.replace(/_/g, ' ')}</span>
-            </p>
-            <div className="flex space-x-4">
-              <button
-                onClick={() => startLesson(lastLesson.topic, lastLesson.subtopic)}
-                className="bg-white text-blue-600 px-6 py-2 rounded-md font-medium hover:bg-gray-100"
-              >
-                {lastLesson.completed ? 'Review Lesson' : 'Continue Lesson'}
-              </button>
-              {lastLesson.completed && (
-                <div className="bg-green-500 text-white px-3 py-2 rounded-md text-sm">
-                  ✅ Completed
-                </div>
-              )}
-            </div>
-          </div>
+          <Card className="bg-gradient-to-r from-primary to-purple-600 text-primary-foreground mb-8">
+            <CardContent className="p-6">
+              <h2 className="text-xl font-bold mb-2">Continue Learning</h2>
+              <p className="mb-4">
+                Resume your lesson: <span className="font-semibold">{lastLesson.subtopic.replace(/_/g, ' ')}</span>
+              </p>
+              <div className="flex space-x-4">
+                <Button
+                  variant="secondary"
+                  onClick={() => startLesson(lastLesson.topic, lastLesson.subtopic)}
+                >
+                  {lastLesson.completed ? 'Review Lesson' : 'Continue Lesson'}
+                </Button>
+                {lastLesson.completed && (
+                  <Badge variant="secondary" className="bg-green-500 text-white">
+                    ✅ Completed
+                  </Badge>
+                )}
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {/* Learning Path */}
         <div className="space-y-6">
-          <h2 className="text-lg font-semibold text-gray-900">Your Learning Path</h2>
+          <h2 className="text-lg font-semibold text-foreground">Your Learning Path</h2>
           
           {topics.map((topic) => (
-            <div key={topic.id} className="bg-white rounded-lg shadow-sm border p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">{topic.name}</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {topic.subtopics.map((subtopic) => (
-                  <div
-                    key={subtopic.id}
-                    className={`border rounded-lg p-4 transition-colors relative ${
-                      subtopic.completed
-                        ? 'border-green-300 bg-green-50'
-                        : subtopic.unlocked
-                        ? 'border-blue-200 bg-blue-50 hover:bg-blue-100'
-                        : 'border-gray-200 bg-gray-50'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-medium text-gray-900">{subtopic.name}</h4>
-                      {subtopic.completed && (
-                        <div className="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
-                          ✅ Complete
+            <Card key={topic.id}>
+              <CardHeader>
+                <CardTitle>{topic.name}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {topic.subtopics.map((subtopic) => (
+                    <Card
+                      key={subtopic.id}
+                      className={`transition-colors ${
+                        subtopic.completed
+                          ? 'border-green-500/50 bg-green-50/50'
+                          : subtopic.unlocked
+                          ? 'border-primary/50 bg-primary/5 hover:bg-primary/10'
+                          : 'border-muted bg-muted/30'
+                      }`}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-medium text-foreground">{subtopic.name}</h4>
+                          {subtopic.completed && (
+                            <Badge variant="secondary" className="bg-green-500 text-white">
+                              ✅ Complete
+                            </Badge>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    
-                    {subtopic.unlocked ? (
-                      <button
-                        onClick={() => startLesson(topic.id, subtopic.id)}
-                        className={`w-full py-2 px-4 rounded-md transition-colors ${
-                          subtopic.completed
-                            ? 'bg-green-600 text-white hover:bg-green-700'
-                            : 'bg-blue-600 text-white hover:bg-blue-700'
-                        }`}
-                      >
-                        {subtopic.completed ? 'Review Lesson' : 'Start Lesson'}
-                      </button>
-                    ) : (
-                      <div className="text-gray-500 text-sm">
-                        🔒 Complete previous lessons to unlock
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+                        
+                        {subtopic.unlocked ? (
+                          <Button
+                            onClick={() => startLesson(topic.id, subtopic.id)}
+                            className="w-full"
+                            variant={subtopic.completed ? "secondary" : "default"}
+                          >
+                            {subtopic.completed ? 'Review Lesson' : 'Start Lesson'}
+                          </Button>
+                        ) : (
+                          <div className="text-muted-foreground text-sm">
+                            🔒 Complete previous lessons to unlock
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
 
+        {/* Subscription Status */}
+        {subscription && (
+          <Card className="mt-8">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>Your Plan</span>
+                <Badge variant={subscription.plan === 'free' ? 'secondary' : 'default'}>
+                  {subscription.plan.charAt(0).toUpperCase() + subscription.plan.slice(1)}
+                </Badge>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold">
+                    {subscription.features.dailyLessonLimit || '∞'}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Daily Lessons</div>
+                  {subscription.features.dailyLessonLimit && (
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {subscriptionService.getRemainingLessons(user?.id || '')} remaining today
+                    </div>
+                  )}
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">
+                    {subscription.features.analyticsAccess ? '✓' : '✗'}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Advanced Analytics</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold">
+                    {subscription.features.certificateGeneration ? '✓' : '✗'}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Certificates</div>
+                </div>
+              </div>
+              
+              {subscription.plan === 'free' && (
+                <div className="mt-4 text-center">
+                  <Button onClick={() => router.push('/subscription')} size="sm">
+                    Upgrade for Unlimited Access
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
         {/* Progress Overview */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm border p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Progress</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">{userStats.lessonsCompleted}</div>
-              <div className="text-gray-600">Lessons Completed</div>
+        <Card className="mt-8">
+          <CardHeader>
+            <CardTitle>Your Progress</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary">{userStats.lessonsCompleted}</div>
+                <div className="text-muted-foreground">Lessons Completed</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-green-600">{userStats.quizzesPassed}</div>
+                <div className="text-muted-foreground">Quizzes Passed</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-purple-600">{userStats.totalXP}</div>
+                <div className="text-muted-foreground">XP Earned</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-orange-600">{userStats.currentStreak}</div>
+                <div className="text-muted-foreground">Day Streak</div>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-green-600">{userStats.quizzesPassed}</div>
-              <div className="text-gray-600">Quizzes Passed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-purple-600">{userStats.totalXP}</div>
-              <div className="text-gray-600">XP Earned</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-600">{userStats.currentStreak}</div>
-              <div className="text-gray-600">Day Streak</div>
-            </div>
-          </div>
-          
-          {userStats.lastLessonDate && (
-            <div className="mt-4 text-center text-sm text-gray-500">
-              Last activity: {new Date(userStats.lastLessonDate).toLocaleDateString()}
-            </div>
-          )}
-        </div>
+            
+            {userStats.lastLessonDate && (
+              <div className="mt-4 text-center text-sm text-muted-foreground">
+                Last activity: {new Date(userStats.lastLessonDate).toLocaleDateString()}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </main>
     </div>
   )

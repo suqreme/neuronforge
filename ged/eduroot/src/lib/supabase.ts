@@ -26,3 +26,166 @@ export const createServerClient = () => {
   
   return createClient(serverUrl, serverKey)
 }
+
+// Database types
+export type Database = {
+  public: {
+    Tables: {
+      user_profiles: {
+        Row: {
+          id: string
+          email: string | null
+          full_name: string | null
+          avatar_url: string | null
+          role: 'student' | 'teacher' | 'admin'
+          country: string | null
+          placement_level: string | null
+          subscription_plan: 'free' | 'basic' | 'premium'
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          email?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          role?: 'student' | 'teacher' | 'admin'
+          country?: string | null
+          placement_level?: string | null
+          subscription_plan?: 'free' | 'basic' | 'premium'
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          role?: 'student' | 'teacher' | 'admin'
+          country?: string | null
+          placement_level?: string | null
+          subscription_plan?: 'free' | 'basic' | 'premium'
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      user_progress: {
+        Row: {
+          id: string
+          user_id: string
+          subject: string
+          grade_level: string
+          topic: string
+          subtopic: string
+          status: 'locked' | 'unlocked' | 'in_progress' | 'completed'
+          score: number
+          attempts: number
+          completed_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          subject: string
+          grade_level: string
+          topic: string
+          subtopic: string
+          status?: 'locked' | 'unlocked' | 'in_progress' | 'completed'
+          score?: number
+          attempts?: number
+          completed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          subject?: string
+          grade_level?: string
+          topic?: string
+          subtopic?: string
+          status?: 'locked' | 'unlocked' | 'in_progress' | 'completed'
+          score?: number
+          attempts?: number
+          completed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      lessons: {
+        Row: {
+          id: string
+          user_id: string
+          subject: string
+          grade_level: string
+          topic: string
+          subtopic: string
+          content: string
+          quiz_data: any
+          ai_notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          subject: string
+          grade_level: string
+          topic: string
+          subtopic: string
+          content: string
+          quiz_data?: any
+          ai_notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          subject?: string
+          grade_level?: string
+          topic?: string
+          subtopic?: string
+          content?: string
+          quiz_data?: any
+          ai_notes?: string | null
+          created_at?: string
+        }
+      }
+      user_gamification: {
+        Row: {
+          id: string
+          user_id: string
+          level: number
+          total_xp: number
+          earned_badges: any
+          achievements: any
+          stats: any
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          level?: number
+          total_xp?: number
+          earned_badges?: any
+          achievements?: any
+          stats?: any
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          level?: number
+          total_xp?: number
+          earned_badges?: any
+          achievements?: any
+          stats?: any
+          created_at?: string
+          updated_at?: string
+        }
+      }
+    }
+  }
+}

@@ -29,6 +29,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return
     }
 
+    // Check for classroom student first
+    const classroomStudent = localStorage.getItem('current_classroom_student')
+    if (classroomStudent) {
+      const student = JSON.parse(classroomStudent)
+      setUser({
+        id: student.id,
+        email: student.email,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        user_metadata: student.user_metadata
+      })
+      setLoading(false)
+      return
+    }
+
     // Skip if Supabase is not configured
     if (!supabase) {
       console.warn('Supabase not configured - running in demo mode')
@@ -68,15 +83,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     try {
       const { data, error } = await supabase
-        .from('users')
+        .from('user_profiles')
         .select('*')
         .eq('id', userId)
         .single()
 
-      if (error) throw error
+      if (error) {
+        console.error('Database error - full error object:', error)
+        console.error('Database error - JSON stringified:', JSON.stringify(error, null, 2))
+        throw error
+      }
+      
+      console.log('User profile found:', data)
       setUser(data)
-    } catch (error) {
-      console.error('Error fetching user profile:', error)
+    } catch (error: any) {
+      console.error('Catch block - full error object:', error)
+      console.error('Catch block - JSON stringified:', JSON.stringify(error, null, 2))
+      console.error('Catch block - error type:', typeof error)
+      console.error('Catch block - error constructor:', error?.constructor?.name)
+      
+      // The database trigger should have created the profile automatically
+      // If it's still failing, it might be a temporary database issue
+      // Set loading to false so the user isn't stuck
+      setUser(null)
     } finally {
       setLoading(false)
     }
@@ -127,6 +156,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signOut = async () => {
+    // Clear classroom student if exists
+    localStorage.removeItem('current_classroom_student')
+    
     if (!supabase) {
       setUser(null)
       return

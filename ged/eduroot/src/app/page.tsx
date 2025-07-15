@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation'
 import LoginForm from '@/components/auth/LoginForm'
 import GradeEstimate from '@/components/auth/GradeEstimate'
 import DiagnosticTest from '@/components/auth/DiagnosticTest'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 export default function Home() {
   const { user, loading } = useAuth()
@@ -47,10 +50,10 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-muted-foreground">Loading...</p>
         </div>
       </div>
     )
@@ -58,15 +61,29 @@ export default function Home() {
 
   if (!user && step === 'login') {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="max-w-4xl w-full">
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-foreground mb-4">
               Welcome to EduRoot
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-muted-foreground">
               AI-powered learning platform for everyone, everywhere
             </p>
+            <div className="mt-6 space-y-4">
+              <div className="flex items-center justify-center space-x-4">
+                <Button 
+                  variant="outline" 
+                  onClick={() => router.push('/classroom')}
+                >
+                  Classroom Mode
+                </Button>
+                <ThemeToggle />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                For shared devices with multiple students
+              </p>
+            </div>
           </div>
           <LoginForm />
         </div>
@@ -80,13 +97,13 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-4xl w-full">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-foreground mb-4">
             Welcome to EduRoot
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-xl text-muted-foreground">
             Let&apos;s find your perfect starting point
           </p>
         </div>
@@ -103,29 +120,31 @@ export default function Home() {
         )}
 
         {step === 'complete' && (
-          <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 text-center">
-            <div className="text-green-600 text-6xl mb-6">🎓</div>
-            <h2 className="text-2xl font-bold mb-4">Ready to Learn!</h2>
-            <p className="text-gray-600 mb-4">
-              Based on your diagnostic test, we&apos;ve placed you at <strong>{placementLevel}</strong> level.
-            </p>
-            <p className="text-gray-600 mb-6">
-              You can always adjust this later as you progress through your lessons.
-            </p>
-            <button
-              onClick={() => {
-                // Mark onboarding as complete and navigate to dashboard
-                if (user) {
-                  localStorage.setItem(`onboarding_${user.id}`, 'true')
-                  localStorage.setItem(`placement_${user.id}`, placementLevel)
-                }
-                router.push('/dashboard')
-              }}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Start Learning
-            </button>
-          </div>
+          <Card className="max-w-md mx-auto">
+            <CardContent className="text-center py-8">
+              <div className="text-green-500 text-6xl mb-6">🎓</div>
+              <CardTitle className="text-2xl mb-4">Ready to Learn!</CardTitle>
+              <p className="text-muted-foreground mb-4">
+                Based on your diagnostic test, we&apos;ve placed you at <strong className="text-foreground">{placementLevel}</strong> level.
+              </p>
+              <p className="text-muted-foreground mb-6">
+                You can always adjust this later as you progress through your lessons.
+              </p>
+              <Button
+                onClick={() => {
+                  // Mark onboarding as complete and navigate to dashboard
+                  if (user) {
+                    localStorage.setItem(`onboarding_${user.id}`, 'true')
+                    localStorage.setItem(`placement_${user.id}`, placementLevel)
+                  }
+                  router.push('/dashboard')
+                }}
+                className="w-full"
+              >
+                Start Learning
+              </Button>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

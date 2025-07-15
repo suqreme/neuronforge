@@ -104,6 +104,52 @@
           }
         }
       }
+    },
+    "grade_3": {
+      "name": "3rd Grade",
+      "order": 3,
+      "topics": {
+        "vocabulary_building": {
+          "name": "Vocabulary Building",
+          "order": 1,
+          "subtopics": {
+            "word_meanings": {
+              "name": "Word Meanings",
+              "order": 1,
+              "learning_objective": "Determine the meaning of words using context clues",
+              "prerequisites": ["grade_2.advanced_reading.reading_strategies"],
+              "estimated_duration": "5-6 lessons"
+            },
+            "synonyms_antonyms": {
+              "name": "Synonyms and Antonyms",
+              "order": 2,
+              "learning_objective": "Identify and use synonyms and antonyms",
+              "prerequisites": ["word_meanings"],
+              "estimated_duration": "4-5 lessons"
+            }
+          }
+        },
+        "writing_skills": {
+          "name": "Writing Skills",
+          "order": 2,
+          "subtopics": {
+            "paragraph_writing": {
+              "name": "Paragraph Writing",
+              "order": 1,
+              "learning_objective": "Write well-organized paragraphs with topic sentences",
+              "prerequisites": ["grade_2.advanced_reading.fluent_reading"],
+              "estimated_duration": "6-8 lessons"
+            },
+            "descriptive_writing": {
+              "name": "Descriptive Writing",
+              "order": 2,
+              "learning_objective": "Use descriptive language to create vivid imagery",
+              "prerequisites": ["paragraph_writing"],
+              "estimated_duration": "4-5 lessons"
+            }
+          }
+        }
+      }
     }
   }
 }

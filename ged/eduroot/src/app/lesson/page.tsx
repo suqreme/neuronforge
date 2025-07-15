@@ -5,8 +5,12 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { curriculumService } from '@/services/curriculumService'
 import { progressService } from '@/services/progressService'
+import { subscriptionService } from '@/services/subscriptionService'
 import LessonContent from '@/components/lesson/LessonContent'
 import QuizComponent from '@/components/lesson/QuizComponent'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 
 interface LessonData {
   lesson: string
@@ -55,6 +59,14 @@ function LessonPageContent() {
   useEffect(() => {
     if (!user) {
       router.push('/')
+      return
+    }
+
+    // Check subscription access before loading lesson
+    const accessCheck = subscriptionService.checkLessonAccess(user.id)
+    if (!accessCheck.allowed) {
+      setError(accessCheck.reason || 'Access denied')
+      setLoading(false)
       return
     }
 
@@ -111,9 +123,10 @@ function LessonPageContent() {
       console.log('Lesson data received:', lesson)
       setLessonData(lesson)
       
-      // Track lesson start
+      // Track lesson start and record access
       if (user) {
         progressService.startLesson(user.id, subject, grade, topic, subtopic)
+        subscriptionService.recordLessonAccess(user.id)
         setLessonStartTime(new Date())
       }
     } catch (error) {
@@ -218,57 +231,74 @@ function LessonPageContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">
-            {currentStep === 'lesson' ? 'Generating your lesson...' : 'Creating your quiz...'}
-          </p>
-        </div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="w-96">
+          <CardContent className="text-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-muted-foreground">
+              {currentStep === 'lesson' ? 'Generating your lesson...' : 'Creating your quiz...'}
+            </p>
+          </CardContent>
+        </Card>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-600 text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h2>
-          <p className="text-gray-600 mb-6">{error}</p>
-          <button
-            onClick={goToDashboard}
-            className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
-          >
-            Back to Dashboard
-          </button>
-        </div>
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <Card className="w-96">
+          <CardHeader>
+            <div className="text-center">
+              <div className="text-destructive text-6xl mb-4">⚠️</div>
+              <CardTitle className="text-2xl">Something went wrong</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p className="text-muted-foreground">{error}</p>
+            <div className="flex space-x-2 justify-center">
+              {error.includes('Daily limit') && (
+                <Button onClick={() => router.push('/subscription')}>
+                  Upgrade Now
+                </Button>
+              )}
+              <Button variant="outline" onClick={goToDashboard}>
+                Back to Dashboard
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-card shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div>
-              <button
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={goToDashboard}
-                className="text-blue-600 hover:text-blue-500 text-sm mb-2"
+                className="mb-2"
               >
                 ← Back to Dashboard
-              </button>
-              <h1 className="text-2xl font-bold text-gray-900">
+              </Button>
+              <h1 className="text-2xl font-bold text-foreground">
                 {subtopicInfo?.name || 'Lesson'}
               </h1>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 {subject === 'math' ? 'Mathematics' : 'English Language Arts'} • {grade.replace('_', ' ')}
               </p>
             </div>
-            <div className="text-sm text-gray-500">
-              Step {currentStep === 'lesson' ? '1' : currentStep === 'quiz' ? '2' : '3'} of 3
+            <div className="flex items-center space-x-4">
+              <div className="text-sm text-muted-foreground">
+                Step {currentStep === 'lesson' ? '1' : currentStep === 'quiz' ? '2' : '3'} of 3
+              </div>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -291,21 +321,18 @@ function LessonPageContent() {
         )}
 
         {currentStep === 'complete' && (
-          <div className="bg-white rounded-lg shadow-sm border p-8 text-center">
-            <div className="text-green-600 text-6xl mb-6">🎉</div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Lesson Complete!</h2>
-            <p className="text-gray-600 mb-6">
-              Congratulations! You&apos;ve successfully completed the lesson on {subtopicInfo?.name}.
-            </p>
-            <div className="flex space-x-4 justify-center">
-              <button
-                onClick={goToDashboard}
-                className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700"
-              >
+          <Card>
+            <CardContent className="text-center py-8 space-y-4">
+              <div className="text-green-500 text-6xl mb-6">🎉</div>
+              <h2 className="text-3xl font-bold text-foreground">Lesson Complete!</h2>
+              <p className="text-muted-foreground">
+                Congratulations! You&apos;ve successfully completed the lesson on {subtopicInfo?.name}.
+              </p>
+              <Button onClick={goToDashboard} size="lg">
                 Continue Learning
-              </button>
-            </div>
-          </div>
+              </Button>
+            </CardContent>
+          </Card>
         )}
       </main>
     </div>
@@ -315,8 +342,8 @@ function LessonPageContent() {
 export default function LessonPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
     }>
       <LessonPageContent />
